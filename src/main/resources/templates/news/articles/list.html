@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Новости</title>
+</head>
+<body>
+<h1>Новости</h1>
+<a data-th-href="@{/news/articles/create}">+ Написать статью </a>
+<br>
+<table>
+    <thead>
+    <tr>
+        <th>
+            Новость
+        </th>
+
+        <th>
+            Дата
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr data-th-each="article :${articles}">
+
+        <td>
+        <a data-th-href="@{/news/articles/{articleId}(articleId=${article.id})}"
+           data-th-text="${article.title}">
+        </a>
+        </td>
+
+        <td data-th-text="${article.publicationData}">  </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
