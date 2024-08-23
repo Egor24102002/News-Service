@@ -13,11 +13,14 @@ public class SecurityConfiguration {
 @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http.csrf(CsrfConfigurer::disable)
-            .authorizeHttpRequests(auth-> auth.anyRequest()
+            .authorizeHttpRequests(auth->
+                    auth
+                            .requestMatchers("/login","/news/users/create") .permitAll()
+                            .anyRequest()
                     .authenticated())
                     .formLogin(login->login
-                            .loginPage("/news/articles/login")
-                            .defaultSuccessUrl("/news/articles/list")
+                            .loginPage("/login")
+                            .defaultSuccessUrl("/news/articles")
                             .permitAll()
                     );
     return http.build();

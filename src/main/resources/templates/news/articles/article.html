@@ -1,19 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-
+  <title th:text="${article.title}">Заголовок статьи</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
-<a data-th-href="@{/news/articles/list}">&lArr;На главную </a>
-<h1 data-th-text="${article.title}"></h1>
-<ul>
-  <li>
-    <span data-th-text="${article.content}"></span>
-  </li>
-  <li>
-    <span data-th-text="${article.publicationData}"></span>
-  </li>
-</ul>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h1 class="mt-5" th:text="${article.title}">Заголовок статьи</h1>
+      <p class="text-muted" th:text="${article.dateOfCreate}">Дата создания статьи</p>
+      <div class="mt-4" th:utext="${article.content}">Содержание статьи</div>
+      <p class="mt-4 font-italic">
+        Автор:
+        <span th:text="${article.userResponse.firstname}">Имя</span>
+        <span th:text="${article.userResponse.lastname}">Фамилия</span>
+      </p>
+      <a th:href="@{/news/articles}" class="btn btn-secondary mt-3">Вернуться к новостям</a>
+    </div>
+  </div>
+</div>
 </body>
 </html>

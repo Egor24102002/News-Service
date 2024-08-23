@@ -1,37 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Новости</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
-<h1>Новости</h1>
-<a data-th-href="@{/news/articles/create}">+ Написать статью </a>
-<br>
-<table>
-    <thead>
-    <tr>
-        <th>
-            Новость
-        </th>
-
-        <th>
-            Дата
-        </th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr data-th-each="article :${articles}">
-
-        <td>
-        <a data-th-href="@{/news/articles/{articleId}(articleId=${article.id})}"
-           data-th-text="${article.title}">
-        </a>
-        </td>
-
-        <td data-th-text="${article.publicationData}">  </td>
-    </tr>
-    </tbody>
-</table>
+<a data-th-href="@{/news/articles/create}">&lArr;Создать новость </a>
+<div class="container">
+    <h1 class="mt-5">Последние Новости</h1>
+    <div class="row mt-4">
+        <div th:each="article : ${articlesResponse}" class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${article.title}"></h5>
+                    <h6 class="card-subtitle mb-2 text-muted" th:text="${article.dateOfCreate}"></h6>
+                    <a th:href="@{/news/articles/{articleId}(articleId=${article.articleId})}" class="btn btn-primary">Читать далее</a>
+                    <a th:href="@{/news/articles/edit/{articleId}(articleId=${article.articleId})}" class="btn btn-primary">Редактировать</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

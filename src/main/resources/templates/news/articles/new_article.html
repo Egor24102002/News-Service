@@ -1,24 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Новая статья</title>
+    <title>Создать Новость</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
-<a data-th-href="@{/news/articles/list}">&lArr;На главную </a>
-<h1>Новая статья</h1>
-<form method="post" data-th-action="@{/news/articles/create}">
-<label>
-     Название:<br>
-    <input type="text" name="title">
-</label>
-    <br>
-    <label>
-        Описание:<br>
-        <textarea name="content"></textarea>
-    </label>
-    <br>
-    <button type="submit">Опубликовать статью</button>
-</form>
+<div class="container">
+    <h1 class="mt-5">Создать Новость</h1>
+    <form th:action="@{/news/articles/create}" th:object="${articleRequest}" method="post" class="mt-4">
+        <div class="form-group">
+            <label for="title">Заголовок</label>
+            <input type="text" class="form-control" id="title" th:field="*{title}" placeholder="Введите заголовок">
+        </div>
+
+        <div class="form-group">
+            <label for="content">Содержание</label>
+            <textarea class="form-control" id="content" th:field="*{content}" rows="5" placeholder="Введите содержание"></textarea>
+        </div>
+
+
+
+        <div class="form-group">
+            <label for="category">Категория</label>
+            <select class="form-control" id="category" th:field="*{category}">
+                <option value="" disabled selected>Выберите категорию</option>
+                <option th:each="category : ${categories}" th:value="${category}" th:text="${category}"></option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Создать</button>
+    </form>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>
