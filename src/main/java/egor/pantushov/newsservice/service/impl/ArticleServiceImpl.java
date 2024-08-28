@@ -5,6 +5,8 @@ import egor.pantushov.newsservice.dto.response.ArticleResponse;
 import egor.pantushov.newsservice.entity.Article;
 import egor.pantushov.newsservice.entity.User;
 import egor.pantushov.newsservice.enums.Status;
+import egor.pantushov.newsservice.exeption.ArticleNotFoundException;
+import egor.pantushov.newsservice.exeption.UserNotFoundException;
 import egor.pantushov.newsservice.mapper.ArticleMapper;
 import egor.pantushov.newsservice.repository.ArticleRepository;
 import egor.pantushov.newsservice.repository.UserRepository;
@@ -33,15 +35,12 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public ArticleResponse createArticle(Principal principal, ArticleRequest articleRequest) {
     Article article=new Article();
-    Optional<User> user=userRepository.findByUsername(principal.getName());
-    if (user.isPresent()){
-        article.setAuthor(user.get());
+   User user=userRepository.findByUsername(principal.getName())
+           .orElseThrow(() -> new UserNotFoundException(principal.getName()));
+        article.setAuthor(user);
         article.setStatus(Status.PUBLICATION);
-        }
-    else{
-        throw new RuntimeException("User not found");
-    }
         ArticleMapper.getArticle(article, articleRequest);
+        user.addArticle(article);
         articleRepository.save(article);
     return ArticleMapper.getArticleResponse(article);
     }
@@ -49,21 +48,10 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public ArticleResponse findArticle(Long id) {
         return articleRepository.findById(id).map(ArticleMapper::getArticleResponse)
-                .orElseThrow(() -> new RuntimeException("Article not found"));
+                .orElseThrow(() -> new ArticleNotFoundException(id));
     }
 
-    @Override
-    public ArticleResponse updateArticle(Long id,ArticleRequest articleRequest) {
-        Optional<Article> optionalArticle=articleRepository.findById(id);
-        if (optionalArticle.isPresent()){
-            Article article = optionalArticle.get();
-            ArticleMapper.getArticle(article, articleRequest);
-            articleRepository.save(article);
-            return ArticleMapper.getArticleResponse(article);
-        }
-        else{
-            throw new RuntimeException("Article not found");
-        }
 
-    }
+
+
 }

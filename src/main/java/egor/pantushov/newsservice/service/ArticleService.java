@@ -12,5 +12,5 @@ public interface ArticleService {
      List<ArticleResponse> findAllArticles();
      ArticleResponse createArticle(Principal principal,ArticleRequest articleRequest);
     ArticleResponse findArticle(Long id);
-    ArticleResponse updateArticle(Long id,ArticleRequest articleRequest);
+
 }

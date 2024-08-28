@@ -10,6 +10,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,7 +21,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Entity
 @Builder
-@Table(name = "article")
+@Table(name = "articles")
 public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,10 +43,26 @@ public class Article {
     @Column(nullable=false)
     @Enumerated(EnumType.STRING)
     private Status status;
-
-
+    @OneToMany(mappedBy = "article")
+    private List<Comment> comments=new ArrayList<>();
+    @OneToMany(mappedBy = "article")
+    private List<Evaluation> evaluations=new ArrayList<>();
     public void setAuthor(User author) {
         this.author = author;
         author.addArticle(this);
     }
+
+    public void addComment(Comment comment) {
+        if (comment != null) {
+            this.comments.add(comment);
+        }
+    }
+
+    public void addEvaluation(Evaluation evaluation) {
+        if (evaluation != null) {
+            this.evaluations.add(evaluation);
+        }
+    }
+
+
 }

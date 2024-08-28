@@ -15,11 +15,11 @@ public class SecurityConfiguration {
     http.csrf(CsrfConfigurer::disable)
             .authorizeHttpRequests(auth->
                     auth
-                            .requestMatchers("/login","/news/users/create") .permitAll()
+                            .requestMatchers("/news/login","/news/users/create") .permitAll()
                             .anyRequest()
                     .authenticated())
                     .formLogin(login->login
-                            .loginPage("/login")
+                            .loginPage("/news/login")
                             .defaultSuccessUrl("/news/articles")
                             .permitAll()
                     );

@@ -4,6 +4,7 @@ import egor.pantushov.newsservice.enums.Category;
 import lombok.Value;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Value
 public class ArticleResponse {
@@ -12,4 +13,7 @@ public class ArticleResponse {
     String content;
     String dateOfCreate;
     UserResponse userResponse;
+    List<CommentResponse> commentResponses;
+    long likes;
+    long dislikes;
 }

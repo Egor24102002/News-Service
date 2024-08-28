@@ -37,10 +37,20 @@ public class User {
     @Builder.Default
     @OneToMany(mappedBy = "author")
     private List<Article> articles=new ArrayList<>();
-
+    @Builder.Default
+    @OneToMany(mappedBy = "user")
+    private List<Comment> comments=new ArrayList<>();
+    @OneToOne
+    @JoinColumn(name = "evaluation_id")
+    Evaluation evaluation;
     public void addArticle(Article article) {
         if (article != null) {
             this.articles.add(article);
+        }
+    }
+    public void addComment(Comment comment) {
+        if (comment != null) {
+            this.comments.add(comment);
         }
     }
 

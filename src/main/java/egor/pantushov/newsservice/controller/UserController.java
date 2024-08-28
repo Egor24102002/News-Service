@@ -23,7 +23,7 @@ public class UserController {
 
     @PostMapping("create")
     public String createUser(UserRequest userRequest){
-        UserResponse userResponse=this.userService.createUser(userRequest);
+        this.userService.createUser(userRequest);
         return "redirect:/news/login";
     }
 }

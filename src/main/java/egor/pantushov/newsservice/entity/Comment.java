@@ -7,6 +7,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -16,7 +18,7 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @Entity
 @Builder
-@Table(name = "comment")
+@Table(name = "comments")
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,4 +35,24 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "article_id")
     private Article article;
+    @OneToMany(mappedBy = "comment")
+    private List<Evaluation> evaluations=new ArrayList<>();
+    public void setUser(User user) {
+        this.user = user;
+        user.addComment(this);
+    }
+
+    public void setArticle(Article article) {
+        this.article = article;
+        article.addComment(this);
+    }
+
+    public void addEvaluation(Evaluation evaluation) {
+        if (evaluation != null) {
+            this.evaluations.add(evaluation);
+        }
+    }
+
+
+
 }

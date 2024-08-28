@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Обновить комментарий</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h2 class="mt-5">Обновить комментарий</h2>
+            <form th:action="@{/news/{articleId}/{commentId}(articleId=${commentRequest.articleId},commentId=${commentRequest.commentId})}" method="post" th:object="${commentRequest}">
+                <div class="form-group">
+                    <label for="commentText">Текст комментария</label>
+                    <textarea id="commentText" class="form-control" th:field="*{text}" rows="5"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Обновить</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

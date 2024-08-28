@@ -2,22 +2,49 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title th:text="${article.title}">Заголовок статьи</title>
+  <title th:text="${articleResponse.title}">Заголовок статьи</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <h1 class="mt-5" th:text="${article.title}">Заголовок статьи</h1>
-      <p class="text-muted" th:text="${article.dateOfCreate}">Дата создания статьи</p>
-      <div class="mt-4" th:utext="${article.content}">Содержание статьи</div>
+      <h1 class="mt-5" th:text="${articleResponse.title}">Заголовок статьи</h1>
+      <p class="text-muted" th:text="${articleResponse.dateOfCreate}">Дата создания статьи</p>
+      <div class="mt-4" th:utext="${articleResponse.content}">Содержание статьи</div>
       <p class="mt-4 font-italic">
         Автор:
-        <span th:text="${article.userResponse.firstname}">Имя</span>
-        <span th:text="${article.userResponse.lastname}">Фамилия</span>
+        <span th:text="${articleResponse.userResponse.firstname}">Имя</span>
+        <span th:text="${articleResponse.userResponse.lastname}">Фамилия</span>
       </p>
-      <a th:href="@{/news/articles}" class="btn btn-secondary mt-3">Вернуться к новостям</a>
+
+      <div class="mt-4">
+        <h3>Оставить комментарий:</h3>
+        <form th:action="@{/news/articles/{articleId}(articleId=${articleResponse.articleId})}" method="post" th:object="${commentRequest}">
+          <div class="form-group">
+            <label for="commentText">Текст комментария</label>
+            <textarea id="commentText" class="form-control" th:field="*{text}"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Отправить</button>
+        </form>
+      </div>
+
+      <div class="mt-4">
+        <h3>Комментарии:</h3>
+        <div th:each="comment : ${articleResponse.commentResponses}">
+          <div class="comment">
+            <p th:text="${comment.text}">Текст комментария</p>
+            <p class="text-muted small">
+              <span th:text="${comment.userResponse.firstname}">Имя</span>
+              <span th:text="${comment.userResponse.lastname}">Фамилия</span> -
+              <span th:text="${comment.date}">Дата создания</span>
+            </p>
+            <a th:href="@{/news/{articleId}/{commentId}(articleId=${articleResponse.articleId}, commentId=${comment.commentId})}" class="btn btn-link">Редактировать</a>
+
+          </div>
+          <hr/>
+        </div>
+      </div>
     </div>
   </div>
 </div>
