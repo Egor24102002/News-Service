@@ -1,10 +1,8 @@
 package egor.pantushov.newsservice.entity;
 
-import egor.pantushov.newsservice.enums.Category;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -35,8 +33,8 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "article_id")
     private Article article;
-    @OneToMany(mappedBy = "comment")
-    private List<Evaluation> evaluations=new ArrayList<>();
+   // @OneToMany(mappedBy = "comment")
+   // private List<EvaluationArticles> evaluations=new ArrayList<>();
     public void setUser(User user) {
         this.user = user;
         user.addComment(this);
@@ -47,11 +45,11 @@ public class Comment {
         article.addComment(this);
     }
 
-    public void addEvaluation(Evaluation evaluation) {
+    /*public void addEvaluation(EvaluationArticles evaluation) {
         if (evaluation != null) {
             this.evaluations.add(evaluation);
         }
-    }
+    }*/
 
 
 

@@ -1,16 +1,13 @@
 package egor.pantushov.newsservice.service.impl;
 
 import egor.pantushov.newsservice.dto.request.CommentRequest;
-import egor.pantushov.newsservice.dto.response.ArticleResponse;
 import egor.pantushov.newsservice.dto.response.CommentResponse;
 import egor.pantushov.newsservice.entity.Article;
 import egor.pantushov.newsservice.entity.Comment;
 import egor.pantushov.newsservice.entity.User;
-import egor.pantushov.newsservice.enums.Status;
 import egor.pantushov.newsservice.exeption.ArticleNotFoundException;
 import egor.pantushov.newsservice.exeption.CommentNotFoundException;
 import egor.pantushov.newsservice.exeption.UserNotFoundException;
-import egor.pantushov.newsservice.mapper.ArticleMapper;
 import egor.pantushov.newsservice.mapper.CommentMapper;
 import egor.pantushov.newsservice.repository.ArticleRepository;
 import egor.pantushov.newsservice.repository.CommentRepository;
@@ -20,7 +17,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

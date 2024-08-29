@@ -2,15 +2,10 @@ package egor.pantushov.newsservice.controller;
 
 import egor.pantushov.newsservice.dto.request.ArticleRequest;
 import egor.pantushov.newsservice.dto.request.CommentRequest;
-import egor.pantushov.newsservice.dto.response.ArticleResponse;
 import egor.pantushov.newsservice.dto.response.CommentResponse;
-import egor.pantushov.newsservice.entity.Article;
-import egor.pantushov.newsservice.enums.Category;
-import egor.pantushov.newsservice.mapper.ArticleMapper;
-import egor.pantushov.newsservice.mapper.CommentMapper;
+import egor.pantushov.newsservice.entity.Category;
 import egor.pantushov.newsservice.service.ArticleService;
 import egor.pantushov.newsservice.service.CommentService;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +18,7 @@ import java.security.Principal;
 @RequestMapping("news/articles")
 public class ArticleController {
     private final ArticleService articleService;
-    private final CommentService commentService;
+
     @GetMapping()
     public String getAllArticles(Model model){
      model.addAttribute("articlesResponse",this.articleService.findAllArticles());
@@ -50,22 +45,9 @@ public class ArticleController {
         return "news/articles/article";
     }
 
-    @PostMapping("{articleId:\\d+}")
-    public String createComment(@PathVariable Long articleId,@ModelAttribute CommentRequest commentRequest ,Principal principal){
-        CommentResponse commentResponse=this.commentService.createComment(principal,commentRequest,articleId);
-        return "redirect:/news/articles/" + commentResponse.getArticleId();
-    }
 
-    @PostMapping("{articleId:\\d+}")
-    public String addEvaluationArticle(@PathVariable Long articleId ,Principal principal){
-       this.articleService.addEvaluationArticle(articleId,principal);
-    }
 
-    @PostMapping("{articleId:\\d+}")
-    public String addEvaluationComment(@PathVariable Long articleId,@ModelAttribute CommentRequest commentRequest ,Principal principal){
-        CommentResponse commentResponse=this.commentService.createComment(principal,commentRequest,articleId);
-        return "redirect:/news/articles/" + commentResponse.getArticleId();
-    }
+
 
 
 

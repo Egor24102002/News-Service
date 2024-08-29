@@ -19,6 +19,19 @@
       </p>
 
       <div class="mt-4">
+        <span>Лайков: <span th:text="${articleResponse.EvaluationArticleResponse.likes}">0</span></span>
+        <span>Дизлайков: <span th:text="${articleResponse.EvaluationArticleResponse.dislikes}">0</span></span>
+      </div>
+
+      <form action="#" th:action="@{'/news/articles/' + ${articleResponse.articleId} + '/like'}" th:method="post">
+        <button type="submit" class="btn btn-success">Лайк</button>
+      </form>
+
+      <form action="#" th:action="@{'/news/articles/' + ${articleResponse.articleId} + '/dislike'}" th:method="post">
+        <button type="submit" class="btn btn-danger">Дизлайк</button>
+      </form>
+
+      <div class="mt-4">
         <h3>Оставить комментарий:</h3>
         <form th:action="@{/news/articles/{articleId}(articleId=${articleResponse.articleId})}" method="post" th:object="${commentRequest}">
           <div class="form-group">

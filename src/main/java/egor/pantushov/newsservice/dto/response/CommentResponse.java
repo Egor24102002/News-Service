@@ -9,6 +9,6 @@ public class CommentResponse {
     UserResponse userResponse;
     Long commentId;
     Long articleId;
-    long likes;
-    long dislikes;
+    //long likes;
+   // long dislikes;
 }

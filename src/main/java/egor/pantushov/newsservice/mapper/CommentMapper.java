@@ -1,13 +1,9 @@
 package egor.pantushov.newsservice.mapper;
 
-import egor.pantushov.newsservice.dto.request.ArticleRequest;
 import egor.pantushov.newsservice.dto.request.CommentRequest;
 import egor.pantushov.newsservice.dto.response.CommentResponse;
 import egor.pantushov.newsservice.dto.response.UserResponse;
-import egor.pantushov.newsservice.entity.Article;
 import egor.pantushov.newsservice.entity.Comment;
-import egor.pantushov.newsservice.entity.User;
-import egor.pantushov.newsservice.enums.Type;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -18,13 +14,8 @@ public class CommentMapper {
         UserResponse userResponse= Optional.ofNullable(comment.getUser())
                 .map(UserMapper::getUserResponse).orElse(null);
         String date=comment.getDateOfComment().toString();
-        long likes=  comment.getEvaluations().stream()
-                .filter(evaluation -> evaluation.getType() == Type.LIKE)
-                .count();
-        long dislikes=  comment.getEvaluations().stream()
-                .filter(evaluation -> evaluation.getType() == Type.DISLIKE)
-                .count();
-        return new CommentResponse( comment.getText(),  date.substring(0,date.length()-5),userResponse,comment.getCommentId(),comment.getArticle().getArticleId(),likes,dislikes)
+
+        return new CommentResponse( comment.getText(),  date.substring(0,date.length()-5),userResponse,comment.getCommentId(),comment.getArticle().getArticleId())
                 ;
     }
 

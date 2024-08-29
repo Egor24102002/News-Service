@@ -1,11 +1,8 @@
 package egor.pantushov.newsservice.entity;
 
-import egor.pantushov.newsservice.enums.Category;
-import egor.pantushov.newsservice.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,9 +37,9 @@ public class User {
     @Builder.Default
     @OneToMany(mappedBy = "user")
     private List<Comment> comments=new ArrayList<>();
-    @OneToOne
-    @JoinColumn(name = "evaluation_id")
-    Evaluation evaluation;
+    @Builder.Default
+    @OneToMany(mappedBy = "user")
+    private List<EvaluationArticle> evaluationArticles=new ArrayList<>();
     public void addArticle(Article article) {
         if (article != null) {
             this.articles.add(article);
@@ -51,6 +48,11 @@ public class User {
     public void addComment(Comment comment) {
         if (comment != null) {
             this.comments.add(comment);
+        }
+    }
+    public void addEvaluationArticles(EvaluationArticle evaluationArticle) {
+        if (evaluationArticle != null) {
+            this.evaluationArticles.add(evaluationArticle);
         }
     }
 

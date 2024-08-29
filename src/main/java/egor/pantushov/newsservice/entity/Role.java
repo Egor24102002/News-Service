@@ -1,4 +1,4 @@
-package egor.pantushov.newsservice.enums;
+package egor.pantushov.newsservice.entity;
 
 import org.springframework.security.core.GrantedAuthority;
 

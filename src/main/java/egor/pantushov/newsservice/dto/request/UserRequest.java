@@ -1,9 +1,5 @@
 package egor.pantushov.newsservice.dto.request;
 
-import egor.pantushov.newsservice.enums.Role;
-import jakarta.validation.constraints.NotNull;
-import lombok.Builder;
-import lombok.Data;
 import lombok.Value;
 
 

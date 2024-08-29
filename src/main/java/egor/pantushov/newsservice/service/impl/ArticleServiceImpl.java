@@ -4,7 +4,7 @@ import egor.pantushov.newsservice.dto.request.ArticleRequest;
 import egor.pantushov.newsservice.dto.response.ArticleResponse;
 import egor.pantushov.newsservice.entity.Article;
 import egor.pantushov.newsservice.entity.User;
-import egor.pantushov.newsservice.enums.Status;
+import egor.pantushov.newsservice.entity.Status;
 import egor.pantushov.newsservice.exeption.ArticleNotFoundException;
 import egor.pantushov.newsservice.exeption.UserNotFoundException;
 import egor.pantushov.newsservice.mapper.ArticleMapper;
@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service

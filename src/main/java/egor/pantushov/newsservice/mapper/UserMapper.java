@@ -3,7 +3,6 @@ package egor.pantushov.newsservice.mapper;
 import egor.pantushov.newsservice.dto.request.UserRequest;
 import egor.pantushov.newsservice.dto.response.UserResponse;
 import egor.pantushov.newsservice.entity.User;
-import egor.pantushov.newsservice.enums.Role;
 import org.springframework.stereotype.Component;
 
 @Component

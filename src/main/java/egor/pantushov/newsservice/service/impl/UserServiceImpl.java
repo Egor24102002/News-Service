@@ -1,22 +1,20 @@
-package egor.pantushov.newsservice.service;
+package egor.pantushov.newsservice.service.impl;
 
 import egor.pantushov.newsservice.dto.request.UserRequest;
 import egor.pantushov.newsservice.dto.response.UserResponse;
 import egor.pantushov.newsservice.entity.User;
-import egor.pantushov.newsservice.entity.Article;
-import egor.pantushov.newsservice.enums.Role;
+import egor.pantushov.newsservice.entity.Role;
 import egor.pantushov.newsservice.exeption.UserNotFoundException;
 import egor.pantushov.newsservice.mapper.UserMapper;
 import egor.pantushov.newsservice.repository.UserRepository;
+import egor.pantushov.newsservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service

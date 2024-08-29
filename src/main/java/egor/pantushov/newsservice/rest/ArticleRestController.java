@@ -2,17 +2,13 @@ package egor.pantushov.newsservice.rest;
 
 import egor.pantushov.newsservice.dto.request.ArticleRequest;
 import egor.pantushov.newsservice.dto.response.ArticleResponse;
-import egor.pantushov.newsservice.enums.Category;
 import egor.pantushov.newsservice.service.ArticleService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.awt.*;
 import java.security.Principal;
 import java.util.List;
 
