@@ -1,7 +1,7 @@
 package egor.pantushov.newsservice.exeption;
 
-public class EvaluationArticleException extends NewsException {
-    public EvaluationArticleException(Long articleId) {
+public class EvaluationArticleNotFoundException extends NewsException {
+    public EvaluationArticleNotFoundException(Long articleId) {
         super(String.format("Вы уже оценили статью с id %d", articleId));
     }
 }

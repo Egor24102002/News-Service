@@ -7,7 +7,8 @@ import egor.pantushov.newsservice.entity.EvaluationArticle;
 import egor.pantushov.newsservice.entity.User;
 import egor.pantushov.newsservice.entity.Type;
 import egor.pantushov.newsservice.exeption.ArticleNotFoundException;
-import egor.pantushov.newsservice.exeption.EvaluationArticleException;
+
+import egor.pantushov.newsservice.exeption.EvaluationArticleNotFoundException;
 import egor.pantushov.newsservice.exeption.UserNotFoundException;
 import egor.pantushov.newsservice.mapper.ArticleMapper;
 import egor.pantushov.newsservice.repository.ArticleRepository;
@@ -19,46 +20,60 @@ import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class EvaluationArticleServiceImpl implements EvaluationArticleService {
     private final ArticleRepository articleRepository;
     private final UserRepository userRepository;
-    private final EvaluationArticleRepository evaluationRepository;
+    private final EvaluationArticleRepository evaluationArticleRepository;
     @Override
-    public ArticleResponse addEvaluationArticleLike(Long id, Principal principal) {
-        Article article= articleRepository.findById(id)
-                .orElseThrow(() -> new ArticleNotFoundException(id));
+    public ArticleResponse addEvaluationArticleLike(Long articleId, Principal principal) {
         User user=userRepository.findByUsername(principal.getName())
                 .orElseThrow(() -> new UserNotFoundException(principal.getName()));
-        EvaluationArticle evaluation=new EvaluationArticle();
-        evaluation.setArticle(article);
-        evaluation.setType(Type.LIKE);
-        evaluation.setUser(user);
-       evaluationRepository.save(evaluation);
-       article.addEvaluationArticles(evaluation);
-       user.addEvaluationArticles(evaluation);
-       return ArticleMapper.getArticleResponse(article);
+       Optional <EvaluationArticle> evaluationArticle=isHasEvaluationArticle(user.getUserId(),articleId);
+        evaluationArticle.ifPresent(evaluationArticleRepository::delete);
+    Article article = articleRepository.findById(articleId)
+            .orElseThrow(() -> new ArticleNotFoundException(articleId));
+    EvaluationArticle evaluation = new EvaluationArticle();
+    evaluation.setArticle(article);
+    evaluation.setType(Type.LIKE);
+    evaluation.setUser(user);
+    evaluationArticleRepository.save(evaluation);
+    article.addEvaluationArticles(evaluation);
+    user.addEvaluationArticles(evaluation);
+    return ArticleMapper.getArticleResponse(article);
 
     }
 
 
-
-    public ArticleResponse addEvaluationArticleDislike(Long id, Principal principal) {
-        Article article= articleRepository.findById(id)
-                .orElseThrow(() -> new ArticleNotFoundException(id));
+    @Override
+    public ArticleResponse addEvaluationArticleDislike(Long articleId, Principal principal) {
+        Article article= articleRepository.findById(articleId)
+                .orElseThrow(() -> new ArticleNotFoundException(articleId));
         User user=userRepository.findByUsername(principal.getName())
                 .orElseThrow(() -> new UserNotFoundException(principal.getName()));
+        Optional <EvaluationArticle> evaluationArticle=isHasEvaluationArticle(user.getUserId(),articleId);
+        if (evaluationArticle.isPresent())
+        {
+            evaluationArticleRepository.delete(evaluationArticle.get());
+        }
         EvaluationArticle evaluation=new EvaluationArticle();
         evaluation.setArticle(article);
         evaluation.setType(Type.DISLIKE);
         evaluation.setUser(user);
-        evaluationRepository.save(evaluation);
+        evaluationArticleRepository.save(evaluation);
         article.addEvaluationArticles(evaluation);
         user.addEvaluationArticles(evaluation);
         return ArticleMapper.getArticleResponse(article);
     }
+
+   public Optional<EvaluationArticle> isHasEvaluationArticle(Long articleId,Long userId){
+      Optional<EvaluationArticle> optionalEvaluationArticle= evaluationArticleRepository.findByArticle_ArticleIdAndUser_UserId(articleId,userId);
+    return optionalEvaluationArticle;
+    }
+
 
 
 

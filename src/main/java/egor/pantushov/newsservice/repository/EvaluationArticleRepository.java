@@ -10,6 +10,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface EvaluationArticleRepository extends JpaRepository<EvaluationArticle,Long> {
-
+    Optional<EvaluationArticle> findByArticle_ArticleIdAndUser_UserId(Long articleId, Long userId);
    // boolean existsByArticleIdAndUserId(Long articleId, Long userId);
 }

@@ -33,7 +33,7 @@ public class ArticleMapper {
                 article.getTitle(),
                 article.getContent(),
                 dateOfCreate.substring(0,dateOfCreate.length()-5),
-                userResponse,
+                UserMapper.getUserResponse(article.getAuthor()),
                 commentResponses,
                 evaluationArticleResponse
                 );

@@ -16,17 +16,17 @@ import java.security.Principal;
 @RequestMapping("news/articles/{articleId:\\d+}")
 public class EvaluationArticleController {
 
-    private final EvaluationArticleService evaluationService;
+    private final EvaluationArticleService evaluationArticleService;
 
     @PostMapping("/like")
     public String addEvaluationArticleLike(@PathVariable Long articleId , Principal principal){
-        this.evaluationService.addEvaluationArticleLike(articleId,principal);
+        this.evaluationArticleService.addEvaluationArticleLike(articleId,principal);
         return "redirect:/news/articles";
     }
 
     @PostMapping("/dislike")
     public String addEvaluationArticleDisLike(@PathVariable Long articleId ,Principal principal){
-        this.evaluationService.addEvaluationArticleDislike(articleId,principal);
+        this.evaluationArticleService.addEvaluationArticleDislike(articleId,principal);
         return "redirect:/news/articles";
     }
 
