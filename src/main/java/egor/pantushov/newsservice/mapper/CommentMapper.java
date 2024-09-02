@@ -2,7 +2,8 @@ package egor.pantushov.newsservice.mapper;
 
 import egor.pantushov.newsservice.dto.request.CommentRequest;
 import egor.pantushov.newsservice.dto.response.CommentResponse;
-import egor.pantushov.newsservice.dto.response.UserResponse;
+import egor.pantushov.newsservice.dto.response.EvaluationResponse;
+import egor.pantushov.newsservice.dto.response.user.UserResponse;
 import egor.pantushov.newsservice.entity.Comment;
 import org.springframework.stereotype.Component;
 
@@ -14,8 +15,9 @@ public class CommentMapper {
         UserResponse userResponse= Optional.ofNullable(comment.getUser())
                 .map(UserMapper::getUserResponse).orElse(null);
         String date=comment.getDateOfComment().toString();
-
-        return new CommentResponse( comment.getText(),  date.substring(0,date.length()-5),userResponse,comment.getCommentId(),comment.getArticle().getArticleId())
+        EvaluationResponse evaluationCommentResponse=Optional.ofNullable(comment.getEvaluationComments())
+                .map(EvaluationMapper::getEvaluationResponseByComment).orElse(null);
+        return new CommentResponse( comment.getText(),  date.substring(0,date.length()-5),userResponse,comment.getCommentId(),comment.getArticle().getArticleId(),evaluationCommentResponse)
                 ;
     }
 

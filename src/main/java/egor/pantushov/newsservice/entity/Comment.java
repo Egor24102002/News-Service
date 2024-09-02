@@ -33,8 +33,9 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "article_id")
     private Article article;
-   // @OneToMany(mappedBy = "comment")
-   // private List<EvaluationArticles> evaluations=new ArrayList<>();
+    @Builder.Default
+    @OneToMany(mappedBy = "comment")
+    private List<EvaluationComment> evaluationComments=new ArrayList<>();
     public void setUser(User user) {
         this.user = user;
         user.addComment(this);
@@ -45,11 +46,13 @@ public class Comment {
         article.addComment(this);
     }
 
-    /*public void addEvaluation(EvaluationArticles evaluation) {
-        if (evaluation != null) {
-            this.evaluations.add(evaluation);
+    public void addEvaluationsComments(EvaluationComment evaluationComment) {
+        if (evaluationComment != null) {
+            this.evaluationComments.add(evaluationComment);
         }
-    }*/
+    }
+
+
 
 
 

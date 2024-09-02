@@ -1,5 +1,6 @@
-package egor.pantushov.newsservice.dto.response;
+package egor.pantushov.newsservice.dto.response.user;
 
+import egor.pantushov.newsservice.entity.Role;
 import lombok.Value;
 
 

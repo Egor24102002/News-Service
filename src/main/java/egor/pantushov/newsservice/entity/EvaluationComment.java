@@ -11,12 +11,12 @@ import lombok.*;
 @AllArgsConstructor
 @Entity
 @Builder
-@Table(name = "evaluations_articles")
-public class EvaluationArticle {
+@Table(name = "evaluations_comments")
+public class EvaluationComment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "evaluation_article_id")
-    private Long evaluationArticleId;
+    @Column(name = "evaluation_comment_id")
+    private Long evaluationCommentId;
     @Column(nullable=false)
     @Enumerated(EnumType.STRING)
     private Type type;
@@ -24,18 +24,17 @@ public class EvaluationArticle {
     @JoinColumn(name = "user_id")
     private User user;
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name = "article_id")
-    private Article article;
+    @JoinColumn(name = "comment_id")
+    private Comment comment;
 
     public void setUser(User user) {
         this.user = user;
-        user.addEvaluationsArticles(this);
+        user.addEvaluationsComments(this);
     }
 
-
-    public void setArticle(Article article) {
-        this.article = article;
-    article.addEvaluationsArticles(this);
+    public void setComment(Comment comment) {
+        this.comment = comment;
+        comment.addEvaluationsComments(this);
     }
 
 }

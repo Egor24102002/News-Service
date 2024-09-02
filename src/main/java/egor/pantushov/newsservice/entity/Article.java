@@ -44,7 +44,9 @@ public class Article {
     @Builder.Default
     @OneToMany(mappedBy = "article")
     private List<EvaluationArticle> evaluationArticles=new ArrayList<>();
-
+    @Builder.Default
+    @OneToMany(mappedBy = "article")
+    private List<Ansichten> ansichtens=new ArrayList<>();
     public void setAuthor(User author) {
         this.author = author;
         author.addArticle(this);
@@ -55,13 +57,18 @@ public class Article {
             this.comments.add(comment);
         }
     }
-    public void addEvaluationArticles(EvaluationArticle evaluationArticle) {
+    public void addEvaluationsArticles(EvaluationArticle evaluationArticle) {
         if (evaluationArticle != null) {
             this.evaluationArticles.add(evaluationArticle);
         }
     }
 
+    public void addAnsichtens(Ansichten ansichten) {
+        if (ansichten != null) {
+            this.ansichtens.add(ansichten);
+        }
     }
+}
 
 
 

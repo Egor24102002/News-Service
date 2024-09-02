@@ -1,5 +1,6 @@
 package egor.pantushov.newsservice.dto.response;
 
+import egor.pantushov.newsservice.dto.response.user.UserResponse;
 import lombok.Value;
 
 @Value
@@ -8,7 +9,5 @@ public class CommentResponse {
     String date;
     UserResponse userResponse;
     Long commentId;
-    Long articleId;
-    //long likes;
-   // long dislikes;
+    EvaluationResponse evaluationResponse;
 }

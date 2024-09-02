@@ -5,5 +5,6 @@ public enum Category {
     War,
     Global,
     Politic,
+    Culture,
     Other
 }

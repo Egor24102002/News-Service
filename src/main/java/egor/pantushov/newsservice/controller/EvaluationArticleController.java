@@ -21,13 +21,13 @@ public class EvaluationArticleController {
     @PostMapping("/like")
     public String addEvaluationArticleLike(@PathVariable Long articleId , Principal principal){
         this.evaluationArticleService.addEvaluationArticleLike(articleId,principal);
-        return "redirect:/news/articles";
+        return "redirect:/news/articles/" + articleId;
     }
 
     @PostMapping("/dislike")
     public String addEvaluationArticleDisLike(@PathVariable Long articleId ,Principal principal){
         this.evaluationArticleService.addEvaluationArticleDislike(articleId,principal);
-        return "redirect:/news/articles";
+        return "redirect:/news/articles/" + articleId;
     }
 
 }

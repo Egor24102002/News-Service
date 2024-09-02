@@ -1,5 +1,6 @@
 package egor.pantushov.newsservice.dto.response;
 
+import egor.pantushov.newsservice.dto.response.user.UserResponse;
 import lombok.Value;
 
 import java.util.List;
@@ -12,5 +13,6 @@ public class ArticleResponse {
     String dateOfCreate;
     UserResponse userResponse;
     List<CommentResponse> commentResponses;
-    EvaluationArticleResponse evaluationArticleResponse;
+    EvaluationResponse evaluationResponse;
+    AnsichtenResponse ansichtenResponse;
 }

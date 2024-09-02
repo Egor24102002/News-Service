@@ -9,8 +9,15 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ArticleService {
-     List<ArticleResponse> findAllArticles();
      ArticleResponse createArticle(Principal principal,ArticleRequest articleRequest);
     ArticleResponse findArticle(Long id);
+    List<ArticleResponse> findSportArticles();
+    List<ArticleResponse> findWarArticles();
+    List<ArticleResponse> findPoliticArticles();
+    List<ArticleResponse> findOtherArticles();
+    List<ArticleResponse> findGlobalArticles();
+    List<ArticleResponse> findCultureArticles();
+    List<ArticleResponse> getPopularArticles();
 
+    List<ArticleResponse> getVerificationArticle();
 }

@@ -1,10 +1,7 @@
 package egor.pantushov.newsservice.mapper;
 
 import egor.pantushov.newsservice.dto.request.ArticleRequest;
-import egor.pantushov.newsservice.dto.response.ArticleResponse;
-import egor.pantushov.newsservice.dto.response.CommentResponse;
-import egor.pantushov.newsservice.dto.response.EvaluationArticleResponse;
-import egor.pantushov.newsservice.dto.response.UserResponse;
+import egor.pantushov.newsservice.dto.response.*;
 import egor.pantushov.newsservice.entity.Article;
 import egor.pantushov.newsservice.entity.Type;
 import lombok.RequiredArgsConstructor;
@@ -18,16 +15,16 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ArticleMapper {
     public static ArticleResponse getArticleResponse(Article article) {
-        UserResponse userResponse= Optional.ofNullable(article.getAuthor())
-                .map(UserMapper::getUserResponse).orElse(null);
         List<CommentResponse> commentResponses = Optional.ofNullable(article.getComments())
                 .map(comments -> comments.stream()
                         .map(CommentMapper::getCommentResponse)
                         .collect(Collectors.toList()))
                 .orElse(null);
     String dateOfCreate=article.getDateOfCreate().toString();
-        EvaluationArticleResponse evaluationArticleResponse=Optional.ofNullable(article.getEvaluationArticles())
-                .map(EvaluationArticleMapper::getEvaluationArticleResponse).orElse(null);
+        AnsichtenResponse ansichtenResponse=Optional.ofNullable(article.getAnsichtens())
+                .map(AnsichtenMapper::getAnsichtenResponseByArticle).orElse(null);
+        EvaluationResponse evaluationArticleResponse=Optional.ofNullable(article.getEvaluationArticles())
+                .map(EvaluationMapper::getEvaluationResponsebyArticle).orElse(null);
         return new ArticleResponse(
                 article.getArticleId(),
                 article.getTitle(),
@@ -35,7 +32,8 @@ public class ArticleMapper {
                 dateOfCreate.substring(0,dateOfCreate.length()-5),
                 UserMapper.getUserResponse(article.getAuthor()),
                 commentResponses,
-                evaluationArticleResponse
+                evaluationArticleResponse,
+                ansichtenResponse
                 );
     }
 

@@ -1,7 +1,6 @@
 package egor.pantushov.newsservice.service.impl;
 
 import egor.pantushov.newsservice.dto.response.ArticleResponse;
-import egor.pantushov.newsservice.dto.response.EvaluationArticleResponse;
 import egor.pantushov.newsservice.entity.Article;
 import egor.pantushov.newsservice.entity.EvaluationArticle;
 import egor.pantushov.newsservice.entity.User;
@@ -32,8 +31,15 @@ public class EvaluationArticleServiceImpl implements EvaluationArticleService {
     public ArticleResponse addEvaluationArticleLike(Long articleId, Principal principal) {
         User user=userRepository.findByUsername(principal.getName())
                 .orElseThrow(() -> new UserNotFoundException(principal.getName()));
-       Optional <EvaluationArticle> evaluationArticle=isHasEvaluationArticle(user.getUserId(),articleId);
-        evaluationArticle.ifPresent(evaluationArticleRepository::delete);
+       Optional <EvaluationArticle> evaluationArticle=isHasEvaluationArticle(articleId,user.getUserId());
+       if (evaluationArticle.isPresent()){
+           if (evaluationArticle.get().getType()==Type.LIKE)
+           {
+               evaluationArticleRepository.delete(evaluationArticle.get());
+               return null;
+           }
+           evaluationArticleRepository.delete(evaluationArticle.get());
+        }
     Article article = articleRepository.findById(articleId)
             .orElseThrow(() -> new ArticleNotFoundException(articleId));
     EvaluationArticle evaluation = new EvaluationArticle();
@@ -41,8 +47,8 @@ public class EvaluationArticleServiceImpl implements EvaluationArticleService {
     evaluation.setType(Type.LIKE);
     evaluation.setUser(user);
     evaluationArticleRepository.save(evaluation);
-    article.addEvaluationArticles(evaluation);
-    user.addEvaluationArticles(evaluation);
+    article.addEvaluationsArticles(evaluation);
+    user.addEvaluationsArticles(evaluation);
     return ArticleMapper.getArticleResponse(article);
 
     }
@@ -54,9 +60,13 @@ public class EvaluationArticleServiceImpl implements EvaluationArticleService {
                 .orElseThrow(() -> new ArticleNotFoundException(articleId));
         User user=userRepository.findByUsername(principal.getName())
                 .orElseThrow(() -> new UserNotFoundException(principal.getName()));
-        Optional <EvaluationArticle> evaluationArticle=isHasEvaluationArticle(user.getUserId(),articleId);
-        if (evaluationArticle.isPresent())
-        {
+        Optional <EvaluationArticle> evaluationArticle=isHasEvaluationArticle(articleId,user.getUserId());
+        if (evaluationArticle.isPresent()){
+            if (evaluationArticle.get().getType()==Type.DISLIKE)
+            {
+                evaluationArticleRepository.delete(evaluationArticle.get());
+                return null;
+            }
             evaluationArticleRepository.delete(evaluationArticle.get());
         }
         EvaluationArticle evaluation=new EvaluationArticle();
@@ -64,13 +74,13 @@ public class EvaluationArticleServiceImpl implements EvaluationArticleService {
         evaluation.setType(Type.DISLIKE);
         evaluation.setUser(user);
         evaluationArticleRepository.save(evaluation);
-        article.addEvaluationArticles(evaluation);
-        user.addEvaluationArticles(evaluation);
+        article.addEvaluationsArticles(evaluation);
+        user.addEvaluationsArticles(evaluation);
         return ArticleMapper.getArticleResponse(article);
     }
 
    public Optional<EvaluationArticle> isHasEvaluationArticle(Long articleId,Long userId){
-      Optional<EvaluationArticle> optionalEvaluationArticle= evaluationArticleRepository.findByArticle_ArticleIdAndUser_UserId(articleId,userId);
+        Optional<EvaluationArticle> optionalEvaluationArticle= evaluationArticleRepository.findEvaluationArticleByUserIdArticleId(articleId,userId);
     return optionalEvaluationArticle;
     }
 

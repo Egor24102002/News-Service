@@ -1,7 +1,7 @@
 package egor.pantushov.newsservice.service.impl;
 
 import egor.pantushov.newsservice.dto.request.UserRequest;
-import egor.pantushov.newsservice.dto.response.UserResponse;
+import egor.pantushov.newsservice.dto.response.user.UserResponse;
 import egor.pantushov.newsservice.entity.User;
 import egor.pantushov.newsservice.entity.Role;
 import egor.pantushov.newsservice.exeption.UserNotFoundException;
@@ -15,6 +15,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -39,6 +41,11 @@ public class UserServiceImpl implements UserService,UserDetailsService {
         UserMapper.getUser(user,userRequest);
         userRepository.save(user);
         return  UserMapper.getUserResponse(user);
+    }
+
+    @Override
+    public List<User> findAllUsers() {
+        return userRepository.findAll();
     }
 
 }

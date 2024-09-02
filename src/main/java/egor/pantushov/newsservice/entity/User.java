@@ -40,6 +40,12 @@ public class User {
     @Builder.Default
     @OneToMany(mappedBy = "user")
     private List<EvaluationArticle> evaluationArticles=new ArrayList<>();
+    @Builder.Default
+    @OneToMany(mappedBy = "user")
+    private List<EvaluationComment> evaluationComments=new ArrayList<>();
+    @Builder.Default
+    @OneToMany(mappedBy = "user")
+    private List<Ansichten> ansichtens=new ArrayList<>();
     public void addArticle(Article article) {
         if (article != null) {
             this.articles.add(article);
@@ -50,10 +56,21 @@ public class User {
             this.comments.add(comment);
         }
     }
-    public void addEvaluationArticles(EvaluationArticle evaluationArticle) {
+    public void addEvaluationsArticles(EvaluationArticle evaluationArticle) {
         if (evaluationArticle != null) {
             this.evaluationArticles.add(evaluationArticle);
         }
     }
 
+    public void addEvaluationsComments(EvaluationComment evaluationComment) {
+        if (evaluationComment != null) {
+            this.evaluationComments.add(evaluationComment);
+        }
+    }
+
+    public void addAnsichtens(Ansichten ansichten) {
+        if (ansichten != null) {
+            this.ansichtens.add(ansichten);
+        }
+    }
 }

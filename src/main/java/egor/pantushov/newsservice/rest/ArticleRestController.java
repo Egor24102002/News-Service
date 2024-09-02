@@ -17,13 +17,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ArticleRestController {
     private final ArticleService articleService;
-    @GetMapping()
+  /*  @GetMapping()
     public ResponseEntity<List<ArticleResponse>> getAllArticles(){
         List<ArticleResponse> articleResponses=articleService.findAllArticles();
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(articleResponses);
-    }
+    }*/
 
 
     @PostMapping

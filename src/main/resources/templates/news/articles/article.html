@@ -19,8 +19,8 @@
       </p>
 
       <div class="mt-4">
-        <span>Лайков: <span th:text="${articleResponse.EvaluationArticleResponse.likes}">0</span></span>
-        <span>Дизлайков: <span th:text="${articleResponse.EvaluationArticleResponse.dislikes}">0</span></span>
+        <span>Лайков: <span th:text="${articleResponse.EvaluationResponse.likes}">0</span></span>
+        <span>Дизлайков: <span th:text="${articleResponse.EvaluationResponse.dislikes}">0</span></span>
       </div>
 
       <form action="#" th:action="@{'/news/articles/' + ${articleResponse.articleId} + '/like'}" th:method="post">
@@ -52,8 +52,22 @@
               <span th:text="${comment.userResponse.lastname}">Фамилия</span> -
               <span th:text="${comment.date}">Дата создания</span>
             </p>
-            <a th:href="@{/news/{articleId}/{commentId}(articleId=${articleResponse.articleId}, commentId=${comment.commentId})}" class="btn btn-link">Редактировать</a>
+            <a th:href="@{/news/articles/{articleId}/{commentId}(articleId=${articleResponse.articleId}, commentId=${comment.commentId})}" class="btn btn-link">Редактировать</a>
+            <form th:action="@{'/news/articles/' + ${articleResponse.articleId} + '/likeComment'}" method="post" class="d-inline">
+              <input type="hidden" name="commentId" th:value="${comment.commentId}" />
+              <button type="submit" class="btn btn-secondary">
+                <i class="fas fa-thumbs-up"></i>
+                <span th:text="${comment.evaluationResponse.likes}">0</span>
+              </button>
+            </form>
 
+            <form th:action="@{'/news/articles/' + ${articleResponse.articleId} + '/dislikeComment'}" method="post" class="d-inline">
+              <input type="hidden" name="commentId" th:value="${comment.commentId}" />
+              <button type="submit" class="btn btn-secondary">
+                <i class="fas fa-thumbs-up"></i>
+                <span th:text="${comment.evaluationResponse.dislikes}">0</span>
+              </button>
+            </form>
           </div>
           <hr/>
         </div>

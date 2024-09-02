@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface EvaluationArticleRepository extends JpaRepository<EvaluationArticle,Long> {
-    Optional<EvaluationArticle> findByArticle_ArticleIdAndUser_UserId(Long articleId, Long userId);
-   // boolean existsByArticleIdAndUserId(Long articleId, Long userId);
+    @Query("select u from EvaluationArticle u where u.article.articleId = ?1 and u.user.userId = ?2")
+    Optional<EvaluationArticle> findEvaluationArticleByUserIdArticleId(Long articleId, Long userId);
+
 }

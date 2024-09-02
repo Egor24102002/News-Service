@@ -10,7 +10,7 @@
     <div class="row">
         <div class="col-md-8 offset-md-2">
             <h2 class="mt-5">Обновить комментарий</h2>
-            <form th:action="@{/news/{articleId}/{commentId}(articleId=${commentRequest.articleId},commentId=${commentRequest.commentId})}" method="post" th:object="${commentRequest}">
+            <form th:action="@{/news/articles/{articleId}/{commentId}(articleId=${commentRequest.articleId},commentId=${commentRequest.commentId})}" method="post" th:object="${commentRequest}">
                 <div class="form-group">
                     <label for="commentText">Текст комментария</label>
                     <textarea id="commentText" class="form-control" th:field="*{text}" rows="5"></textarea>

@@ -21,7 +21,7 @@ public class CommentController {
     @PostMapping()
     public String createComment(@PathVariable Long articleId, @ModelAttribute CommentRequest commentRequest , Principal principal){
         CommentResponse commentResponse=this.commentService.createComment(principal,commentRequest,articleId);
-        return "redirect:/news/articles/" + commentResponse.getArticleId();
+        return "redirect:/news/articles/" + articleId;
     }
 
     @GetMapping("/{commentId:\\d+}")

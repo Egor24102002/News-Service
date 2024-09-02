@@ -1,7 +1,7 @@
 package egor.pantushov.newsservice.mapper;
 
 import egor.pantushov.newsservice.dto.request.UserRequest;
-import egor.pantushov.newsservice.dto.response.UserResponse;
+import egor.pantushov.newsservice.dto.response.user.UserResponse;
 import egor.pantushov.newsservice.entity.User;
 import org.springframework.stereotype.Component;
 

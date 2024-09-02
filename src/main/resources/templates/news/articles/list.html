@@ -7,10 +7,39 @@
 </head>
 <body>
 <a data-th-href="@{/news/articles/create}">&lArr;Создать новость </a>
+<a data-th-href="@{/news/login}">&lArr;Выйти </a>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" data-th-href="@{/news/articles}">Популярные</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-th-href="@{/news/articles/sport}">Спорт</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-th-href="@{/news/articles/war}">Война</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-th-href="@{/news/articles/politic}">Политика</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-th-href="@{/news/articles/global}">Мировые</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-th-href="@{/news/articles/culture}">Культура</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-th-href="@{/news/articles/other}">Другие</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
 <div class="container">
-    <h1 class="mt-5">Последние Новости</h1>
+    <h1 class="mt-5">Новости</h1>
     <div class="row mt-4">
-        <div th:each="article : ${articlesResponse}" class="col-md-4 mb-4">
+        <div th:each="article : ${articlesResponse}" class="col-md-12 mb-4">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title" th:text="${article.title}"></h5>
