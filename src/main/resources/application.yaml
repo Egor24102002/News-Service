@@ -1,4 +1,6 @@
 spring:
+  liquibase:
+    change-log: classpath:/db/migrations/changelog.xml
   jpa:
     properties:
       hibernate:
