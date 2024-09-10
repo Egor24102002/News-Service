@@ -4,9 +4,11 @@ import egor.pantushov.newsservice.dto.request.CommentRequest;
 import egor.pantushov.newsservice.dto.response.CommentResponse;
 import egor.pantushov.newsservice.entity.Article;
 import egor.pantushov.newsservice.entity.Comment;
+import egor.pantushov.newsservice.entity.Role;
 import egor.pantushov.newsservice.entity.User;
 import egor.pantushov.newsservice.exeption.ArticleNotFoundException;
 import egor.pantushov.newsservice.exeption.CommentNotFoundException;
+import egor.pantushov.newsservice.exeption.CommentSubmittedException;
 import egor.pantushov.newsservice.exeption.UserNotFoundException;
 import egor.pantushov.newsservice.mapper.CommentMapper;
 import egor.pantushov.newsservice.repository.ArticleRepository;
@@ -48,9 +50,39 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public CommentResponse update(CommentRequest commentRequest) {
-   Comment comment=  this.commentRepository.findById(commentRequest.getCommentId()). orElseThrow(() -> new CommentNotFoundException(commentRequest.getCommentId()));
-   comment.setText(commentRequest.getText());
-   return  CommentMapper.getCommentResponse(this.commentRepository.save(comment));
+    public CommentResponse update(CommentRequest commentRequest, Long commentId) {
+   Comment comment=  this.commentRepository.findById(commentId). orElseThrow(() -> new CommentNotFoundException(commentId));
+    Comment update_comment=CommentMapper.getComment(comment,commentRequest);
+   return  CommentMapper.getCommentResponse(this.commentRepository.save(update_comment));
+    }
+
+    @Override
+    public CommentResponse getNewCommentForUpdate(Long commentId, Principal principal) {
+        User user=userRepository.findByUsername(principal.getName())
+                .orElseThrow(() -> new UserNotFoundException(principal.getName()));
+        Comment comment=  this.commentRepository.findById(commentId). orElseThrow(() -> new CommentNotFoundException(commentId));
+        if (comment.getUser().getUserId()!=user.getUserId())
+            throw new CommentSubmittedException(commentId, user.getUsername());
+        return CommentMapper.getCommentResponse(comment);
+    }
+
+    @Override
+    public CommentResponse deleteComment(Principal principal, Long commentId) {
+        Comment comment=  this.commentRepository.findById(commentId). orElseThrow(() -> new CommentNotFoundException(commentId));
+        User user=userRepository.findByUsername(principal.getName())
+                .orElseThrow(() -> new UserNotFoundException(principal.getName()));
+        if (user.getRole()== Role.ADMIN) {
+            comment.setIsDeleted(Boolean.TRUE);
+            commentRepository.save(comment);
+        }
+        else{
+            if (comment.getUser().getUserId()!=user.getUserId())
+                throw new CommentSubmittedException(commentId, user.getUsername());
+            else {
+                comment.setIsDeleted(Boolean.TRUE);
+                commentRepository.save(comment);
+            }
+        }
+        return CommentMapper.getCommentResponse(comment);
     }
 }

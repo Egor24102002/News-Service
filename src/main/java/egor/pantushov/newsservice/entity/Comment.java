@@ -36,6 +36,9 @@ public class Comment {
     @Builder.Default
     @OneToMany(mappedBy = "comment")
     private List<EvaluationComment> evaluationComments=new ArrayList<>();
+    @Builder.Default
+    @Column(name = "is_deleted")
+   private boolean isDeleted=false ;
     public void setUser(User user) {
         this.user = user;
         user.addComment(this);
@@ -52,8 +55,12 @@ public class Comment {
         }
     }
 
+    public void setIsDeleted(boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
 
-
-
+    public Boolean getIsDeleted() {
+        return this.isDeleted;
+    }
 
 }

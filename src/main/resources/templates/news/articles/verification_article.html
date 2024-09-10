@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Verification Article</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+
+
+<main>
+    <div th:if="${articleResponse != null}">
+        <h2 th:text="${articleResponse.title}">Article Title</h2>
+        <p th:text="${articleResponse.content}">Article Content</p>
+        <div>
+            <h3>Автор статьи</h3>
+            <p>Author: <span th:text="${articleResponse.userResponse.firstname}">Имя</span></p>
+            <p>Email: <span th:text="${articleResponse.userResponse.lastname}">Фамилия</span></p>
+        </div>
+    </div>
+
+    <div>
+        <a th:href="@{/news/articles/verifications}">Назад</a>
+    </div>
+</main>
+
+</body>
+</html>

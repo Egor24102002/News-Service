@@ -1,10 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Все пользователи</title>
 </head>
 <body>
+<h1>Список всех пользователей</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>Имя</th>
+        <th>Фамилия</th>
+        <th>Роль</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${usersResponse}">
+        <td th:text="${user.firstname}">Имя</td>
+        <td th:text="${user.lastname}">Фамилия</td>
+        <td>
+            <form th:action="@{/news/users/{userId}/giveRole(userId=${user.userId})}" method="post">
+                <select name="role">
+                    <option th:each="role : ${roles}"
+                            th:value="${role}"
+                            th:text="${role.name()}"
+                            th:selected="${role == user.role}">
+                    </option>
+                </select>
+                <button type="submit">Сохранить</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
 
 </body>
 </html>

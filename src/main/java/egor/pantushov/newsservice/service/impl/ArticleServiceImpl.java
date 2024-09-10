@@ -2,10 +2,7 @@ package egor.pantushov.newsservice.service.impl;
 
 import egor.pantushov.newsservice.dto.request.ArticleRequest;
 import egor.pantushov.newsservice.dto.response.ArticleResponse;
-import egor.pantushov.newsservice.entity.Article;
-import egor.pantushov.newsservice.entity.Category;
-import egor.pantushov.newsservice.entity.User;
-import egor.pantushov.newsservice.entity.Status;
+import egor.pantushov.newsservice.entity.*;
 import egor.pantushov.newsservice.exeption.ArticleNotFoundException;
 import egor.pantushov.newsservice.exeption.UserNotFoundException;
 import egor.pantushov.newsservice.mapper.ArticleMapper;
@@ -16,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,7 +29,10 @@ public class ArticleServiceImpl implements ArticleService {
    User user=userRepository.findByUsername(principal.getName())
            .orElseThrow(() -> new UserNotFoundException(principal.getName()));
         article.setAuthor(user);
-        article.setStatus(Status.VERIFICATION);
+        if (user.getRole()== Role.ADMIN)
+            article.setStatus(Status.PUBLICATION);
+        else
+            article.setStatus(Status.VERIFICATION);
         ArticleMapper.getArticle(article, articleRequest);
         user.addArticle(article);
         articleRepository.save(article);
@@ -99,10 +98,26 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<ArticleResponse> getVerificationArticle() {
+    public List<ArticleResponse> getVerificationsArticle() {
         return articleRepository.findAllByStatus(Status.VERIFICATION)
                 .stream().map(ArticleMapper::getArticleResponse)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public ArticleResponse approveArticle(Long articleId) {
+       Article article=articleRepository.findById(articleId).orElseThrow(()-> new ArticleNotFoundException(articleId));
+    article.setStatus(Status.PUBLICATION);
+  articleRepository.save(article);
+    return ArticleMapper.getArticleResponse(article);
+    }
+
+    @Override
+    public ArticleResponse deleteArticle(Long articleId) {
+        Article article=articleRepository.findById(articleId).orElseThrow(()-> new ArticleNotFoundException(articleId));
+        article.setStatus(Status.DELETED);
+        articleRepository.save(article);
+        return ArticleMapper.getArticleResponse(article);
     }
 
 

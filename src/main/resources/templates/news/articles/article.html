@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
+<a data-th-href="@{/news/articles}">;Назад </a>
 <div class="container">
   <div class="row">
     <div class="col-md-12">
@@ -53,20 +54,26 @@
               <span th:text="${comment.date}">Дата создания</span>
             </p>
             <a th:href="@{/news/articles/{articleId}/{commentId}(articleId=${articleResponse.articleId}, commentId=${comment.commentId})}" class="btn btn-link">Редактировать</a>
-            <form th:action="@{'/news/articles/' + ${articleResponse.articleId} + '/likeComment'}" method="post" class="d-inline">
-              <input type="hidden" name="commentId" th:value="${comment.commentId}" />
-              <button type="submit" class="btn btn-secondary">
-                <i class="fas fa-thumbs-up"></i>
-                <span th:text="${comment.evaluationResponse.likes}">0</span>
+            <form th:action="@{/news/articles/{articleId}/delete/{commentId}(articleId=${articleResponse.articleId}, commentId=${comment.commentId})}" method="post" class="d-inline" >
+              <button type="submit" class="btn btn-danger">
+                <i class="fas fa-trash"></i> Удалить
               </button>
             </form>
-
-            <form th:action="@{'/news/articles/' + ${articleResponse.articleId} + '/dislikeComment'}" method="post" class="d-inline">
+            <form th:action="@{'/news/articles/' + ${articleResponse.articleId} + '/' + ${comment.commentId} + '/likeComment'}" method="post" class="d-inline">
+            <form th:action="@{'/news/articles/' + ${articleResponse.articleId} + '/' + ${comment.commentId} + '/likeComment'}" method="post" class="d-inline">
               <input type="hidden" name="commentId" th:value="${comment.commentId}" />
-              <button type="submit" class="btn btn-secondary">
-                <i class="fas fa-thumbs-up"></i>
-                <span th:text="${comment.evaluationResponse.dislikes}">0</span>
+              <button type="submit" class="btn btn-success">
+                <i class="fas fa-thumbs-up"></i> Нравится
               </button>
+              <span class="badge badge-light" th:text="${comment.evaluationResponse.likes}">0</span>
+            </form>
+
+            <form th:action="@{'/news/articles/' + ${articleResponse.articleId} + '/' + ${comment.commentId} + '/dislikeComment'}" method="post" class="d-inline">
+              <input type="hidden" name="commentId" th:value="${comment.commentId}" />
+              <button type="submit" class="btn btn-danger">
+                <i class="fas fa-thumbs-down"></i> Не нравится
+              </button>
+              <span class="badge badge-light" th:text="${comment.evaluationResponse.dislikes}">0</span>
             </form>
           </div>
           <hr/>

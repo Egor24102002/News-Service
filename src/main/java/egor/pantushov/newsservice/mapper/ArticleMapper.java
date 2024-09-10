@@ -3,20 +3,19 @@ package egor.pantushov.newsservice.mapper;
 import egor.pantushov.newsservice.dto.request.ArticleRequest;
 import egor.pantushov.newsservice.dto.response.*;
 import egor.pantushov.newsservice.entity.Article;
-import egor.pantushov.newsservice.entity.Type;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Component
-@RequiredArgsConstructor
+
 public class ArticleMapper {
     public static ArticleResponse getArticleResponse(Article article) {
         List<CommentResponse> commentResponses = Optional.ofNullable(article.getComments())
                 .map(comments -> comments.stream()
+                        .filter(comment -> Boolean.FALSE.equals(comment.getIsDeleted()))
                         .map(CommentMapper::getCommentResponse)
                         .collect(Collectors.toList()))
                 .orElse(null);

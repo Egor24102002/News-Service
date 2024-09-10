@@ -1,11 +1,12 @@
 package egor.pantushov.newsservice.dto.request;
 
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import lombok.Value;
 
 @Value
 public class CommentRequest {
-    Long commentId;
+    @NotEmpty(message = "Text must be not null")
     String text;
-    Long articleId;
 }

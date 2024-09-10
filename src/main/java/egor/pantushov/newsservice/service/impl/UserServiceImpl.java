@@ -1,7 +1,7 @@
 package egor.pantushov.newsservice.service.impl;
 
 import egor.pantushov.newsservice.dto.request.UserRequest;
-import egor.pantushov.newsservice.dto.response.user.UserResponse;
+import egor.pantushov.newsservice.dto.response.UserResponse;
 import egor.pantushov.newsservice.entity.User;
 import egor.pantushov.newsservice.entity.Role;
 import egor.pantushov.newsservice.exeption.UserNotFoundException;
@@ -44,8 +44,18 @@ public class UserServiceImpl implements UserService,UserDetailsService {
     }
 
     @Override
-    public List<User> findAllUsers() {
-        return userRepository.findAll();
+    public List<UserResponse> findAllUsers() {
+        List <User> users=userRepository.findAll();
+        return users.stream().map(UserMapper::getUserResponse)
+                        .collect(Collectors.toList());
+    }
+
+    @Override
+    public UserResponse giveRole(Long userId, Role role) {
+      User user= this.userRepository.findById(userId) .orElseThrow(() -> new UserNotFoundException(userId));
+       user.setRole(role);
+       userRepository.save(user);
+       return UserMapper.getUserResponse(user);
     }
 
 }

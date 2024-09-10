@@ -44,6 +44,7 @@ public class Article {
     @Builder.Default
     @OneToMany(mappedBy = "article")
     private List<EvaluationArticle> evaluationArticles=new ArrayList<>();
+
     @Builder.Default
     @OneToMany(mappedBy = "article")
     private List<Ansichten> ansichtens=new ArrayList<>();
@@ -68,6 +69,7 @@ public class Article {
             this.ansichtens.add(ansichten);
         }
     }
+
 }
 
 

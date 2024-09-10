@@ -1,6 +1,5 @@
 package egor.pantushov.newsservice.dto.response;
 
-import egor.pantushov.newsservice.dto.response.user.UserResponse;
 import lombok.Value;
 
 import java.util.List;

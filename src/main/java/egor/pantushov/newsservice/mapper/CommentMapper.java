@@ -3,13 +3,13 @@ package egor.pantushov.newsservice.mapper;
 import egor.pantushov.newsservice.dto.request.CommentRequest;
 import egor.pantushov.newsservice.dto.response.CommentResponse;
 import egor.pantushov.newsservice.dto.response.EvaluationResponse;
-import egor.pantushov.newsservice.dto.response.user.UserResponse;
+import egor.pantushov.newsservice.dto.response.UserResponse;
 import egor.pantushov.newsservice.entity.Comment;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
-@Component
+
 public class CommentMapper {
     public static CommentResponse getCommentResponse(Comment comment) {
         UserResponse userResponse= Optional.ofNullable(comment.getUser())
@@ -22,7 +22,7 @@ public class CommentMapper {
     }
 
     public static CommentRequest getCommentRequest(CommentResponse commentResponse){
-        return new CommentRequest(commentResponse.getCommentId(), commentResponse.getText(),commentResponse.getArticleId());
+        return new CommentRequest(commentResponse.getText());
     }
 
     public static Comment getComment(Comment comment, CommentRequest commentRequest) {
