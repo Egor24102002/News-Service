@@ -13,6 +13,5 @@ public class ArticleRequest {
     @Size(min = 32)
     @NotEmpty(message = "Content must be not null")
     String content;
-    @NotEmpty(message = "Category must be not null")
     Category category;
 }
