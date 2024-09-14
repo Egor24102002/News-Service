@@ -2,14 +2,16 @@ package egor.pantushov.newsservice.rest;
 
 import egor.pantushov.newsservice.dto.request.ArticleRequest;
 import egor.pantushov.newsservice.dto.response.ArticleResponse;
+import egor.pantushov.newsservice.entity.Category;
+import egor.pantushov.newsservice.exeption.ArticleNotFoundException;
 import egor.pantushov.newsservice.service.AnsichtenService;
 import egor.pantushov.newsservice.service.ArticleService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
 import java.util.List;
@@ -24,98 +26,92 @@ public class ArticleRestController {
 
     @PreAuthorize("hasAnyAuthority('EDITOR','ADMIN')")
     @PostMapping("/new_article")
-    public ResponseEntity<ArticleResponse> createArticle(@Valid @RequestBody ArticleRequest articleRequest, Principal principal){
-        ArticleResponse articleResponse=this.articleService.createArticle(principal,articleRequest);
-        return  ResponseEntity.status(HttpStatus.CREATED)
-                .body(articleResponse);
+    @ResponseStatus(HttpStatus.CREATED)
+    public ArticleResponse createArticle(@Valid @RequestBody ArticleRequest articleRequest, Principal principal) {
+        return this.articleService.createArticle(principal, articleRequest);
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{articleId}")
-    public ResponseEntity<ArticleResponse> getArticle(@PathVariable ("articleId") Long articleId,Principal principal){
-        ArticleResponse articleResponse=this.articleService.findArticle(articleId);
-        this.ansichtenService.addAnsichten(articleId,principal);
-        return  ResponseEntity.status(HttpStatus.OK)
-                .body(articleResponse);
+    public ArticleResponse getArticle(@PathVariable("articleId") Long articleId, Principal principal) {
+        if (articleId <= 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Неправильно введён id");
+        }
+        try {
+            this.ansichtenService.addAnsichten(articleId, principal);
+            return this.articleService.findArticle(articleId);
+        } catch (ArticleNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
     }
 
-    @GetMapping("/sport")
-    public ResponseEntity<List<ArticleResponse>> getSportArticles(){
-        List <ArticleResponse> articleResponses=this.articleService.findSportArticles();
-        return  ResponseEntity.status(HttpStatus.OK)
-                .body(articleResponses);
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/category/{category}")
+    public List<ArticleResponse> getArticlesByCategory(@PathVariable("category") Category category) {
+        return this.articleService.findArticlesByCategory(category);
     }
 
-    @GetMapping("/war")
-    public ResponseEntity<List<ArticleResponse>> getWarArticles(){
-        List <ArticleResponse> articleResponses=this.articleService.findWarArticles();
-        return  ResponseEntity.status(HttpStatus.OK)
-                .body(articleResponses);
-    }
 
-    @GetMapping("/politic")
-    public ResponseEntity<List<ArticleResponse>> getPoliticArticles(){
-        List <ArticleResponse> articleResponses=this.articleService.findPoliticArticles();
-        return  ResponseEntity.status(HttpStatus.OK)
-                .body(articleResponses);
-    }
-
-    @GetMapping("/culture")
-    public ResponseEntity<List<ArticleResponse>> getCultureArticles(){
-        List <ArticleResponse> articleResponses=this.articleService.findCultureArticles();
-        return  ResponseEntity.status(HttpStatus.OK)
-                .body(articleResponses);
-    }
-
-    @GetMapping("/other")
-    public ResponseEntity<List<ArticleResponse>> getOtherArticles( ){
-        List <ArticleResponse> articleResponses=this.articleService.findOtherArticles();
-        return  ResponseEntity.status(HttpStatus.OK)
-                .body(articleResponses);
-    }
-
-    @GetMapping("/global")
-    public ResponseEntity<List<ArticleResponse>> getGlobalArticles( ){
-        List <ArticleResponse> articleResponses=this.articleService.findGlobalArticles();
-        return  ResponseEntity.status(HttpStatus.OK)
-                .body(articleResponses);
-    }
-
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping("")
-    public ResponseEntity<List<ArticleResponse>> getPopularArticles( ){
-        List <ArticleResponse> articleResponses=this.articleService.getPopularArticles();
-        return  ResponseEntity.status(HttpStatus.OK)
-                .body(articleResponses);
+    public List<ArticleResponse> getPopularArticles() {
+        return this.articleService.getPopularArticles();
+
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     @GetMapping("/verifications")
-    public ResponseEntity<List<ArticleResponse>> getVerificationArticles( ){
-        List <ArticleResponse> articleResponses=this.articleService.getVerificationsArticle();
-        return  ResponseEntity.status(HttpStatus.OK)
-                .body(articleResponses);
+    public List<ArticleResponse> getVerificationArticles() {
+        return this.articleService.getVerificationsArticle();
+
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     @GetMapping("/verifications/{articleId:\\d+}")
-    public  ResponseEntity<ArticleResponse> getVerificationArticle(@PathVariable ("articleId")  Long articleId){
-    ArticleResponse articleResponse=this.articleService.findArticle(articleId);
-        return  ResponseEntity.status(HttpStatus.OK)
-                .body(articleResponse);
+    public ArticleResponse getVerificationArticle(@PathVariable("articleId") Long articleId) {
+        if (articleId <= 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Неправильно введён id");
+        }
+        try {
+            return this.articleService.findArticle(articleId);
+        } catch (ArticleNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     @PutMapping("/verifications/{articleId:\\d+}")
-    public  ResponseEntity<ArticleResponse> approveArticle(@PathVariable ("articleId") Long articleId){
-       ArticleResponse articleResponse= this.articleService.approveArticle(articleId);
-        return  ResponseEntity.status(HttpStatus.OK)
-                .body(articleResponse);
+    public ArticleResponse approveArticle(@PathVariable("articleId") Long articleId) {
+        if (articleId <= 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Неправильно введён id");
+        }
+        try {
+            return this.articleService.approveArticle(articleId);
+        } catch (ArticleNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
+
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     @DeleteMapping("/{articleId:\\d+}")
-    public ResponseEntity<String> deleteArticle(@PathVariable  ("articleId") Long articleId){
-        this.articleService.deleteArticle(articleId);
-        return ResponseEntity.ok(String.format("Статья с id: %d удалена", articleId));
+    public String deleteArticle(@PathVariable("articleId") Long articleId) {
+        if (articleId <= 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Неправильно введён id");
+        }
+        try {
+            this.articleService.deleteArticle(articleId);
+            return String.format("Статья с id: %d удалена", articleId);
+        } catch (ArticleNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
     }
 
 }

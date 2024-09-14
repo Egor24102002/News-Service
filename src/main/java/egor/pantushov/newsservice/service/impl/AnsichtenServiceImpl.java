@@ -12,6 +12,7 @@ import egor.pantushov.newsservice.repository.ArticleRepository;
 import egor.pantushov.newsservice.repository.EvaluationArticleRepository;
 import egor.pantushov.newsservice.repository.UserRepository;
 import egor.pantushov.newsservice.service.AnsichtenService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,15 +25,17 @@ public class AnsichtenServiceImpl implements AnsichtenService {
     private final ArticleRepository articleRepository;
     private final UserRepository userRepository;
     private final AnsichtenRepository ansichtenRepository;
+
+    @Transactional
     @Override
     public ArticleResponse addAnsichten(Long articleId, Principal principal) {
-        User user=userRepository.findByUsername(principal.getName())
+        User user = userRepository.findByUsername(principal.getName())
                 .orElseThrow(() -> new UserNotFoundException(principal.getName()));
         Article article = articleRepository.findById(articleId)
                 .orElseThrow(() -> new ArticleNotFoundException(articleId));
-        Optional<Ansichten> optionalAnsichten= ansichtenRepository.findAnsichtenByUserIdArticleId(articleId, user.getUserId());
-        if (optionalAnsichten.isPresent()){
-          return null;
+        Optional<Ansichten> optionalAnsichten = ansichtenRepository.findAnsichtenByUserIdArticleId(articleId, user.getUserId());
+        if (optionalAnsichten.isPresent()) {
+            return null;
         }
         Ansichten ansichten = new Ansichten();
         ansichten.setArticle(article);

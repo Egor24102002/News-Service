@@ -9,8 +9,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
-public interface ArticleRepository extends JpaRepository<Article,Long> {
-    List<Article> findAllByCategoryAndStatus(Category category, Status status)
-            ;
-    List<Article> findAllByStatus( Status status);
+public interface ArticleRepository extends JpaRepository<Article, Long> {
+    List<Article> findAllByCategoryAndStatus(Category category, Status status);
+
+    List<Article> findAllByStatus(Status status);
 }

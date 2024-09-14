@@ -20,10 +20,12 @@
                     <p th:text="${article.dateOfCreate}">Date of creation</p>
 
 
-                    <a th:href="@{/news/articles/verifications/{articleId}(articleId=${article.articleId})}">Проверить статью</a>
+                    <a th:href="@{/news/articles/verifications/{articleId}(articleId=${article.articleId})}">Проверить
+                        статью</a>
 
-                    <form th:action="@{/news/articles/verifications/{articleId}(articleId=${article.articleId})}" method="post">
-                        <input type="hidden" name="articleId" th:value="${article.articleId}" />
+                    <form th:action="@{/news/articles/verifications/{articleId}(articleId=${article.articleId})}"
+                          method="post">
+                        <input type="hidden" name="articleId" th:value="${article.articleId}"/>
                         <button type="submit">Опубликовать</button>
                     </form>
                     </form>

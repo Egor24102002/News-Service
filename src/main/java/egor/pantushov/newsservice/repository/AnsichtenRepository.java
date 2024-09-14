@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
 
-public interface AnsichtenRepository extends JpaRepository<Ansichten,Long> {
+public interface AnsichtenRepository extends JpaRepository<Ansichten, Long> {
     @Query("select u from Ansichten u where u.article.articleId = ?1 and u.user.userId = ?2")
     Optional<Ansichten> findAnsichtenByUserIdArticleId(Long articleId, Long userId);
 }

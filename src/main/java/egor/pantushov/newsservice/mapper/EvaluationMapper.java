@@ -11,23 +11,23 @@ import java.util.List;
 
 public class EvaluationMapper {
     public static EvaluationResponse getEvaluationResponsebyArticle(List<EvaluationArticle> evaluationArticles) {
-        long likes=  evaluationArticles.stream()
+        long likes = evaluationArticles.stream()
                 .filter(evaluation -> evaluation.getType() == Type.LIKE)
                 .count();
-        long dislikes=  evaluationArticles.stream()
+        long dislikes = evaluationArticles.stream()
                 .filter(evaluation -> evaluation.getType() == Type.DISLIKE)
                 .count();
-                return new EvaluationResponse(likes,dislikes);
+        return new EvaluationResponse(likes, dislikes);
     }
 
     public static EvaluationResponse getEvaluationResponseByComment(List<EvaluationComment> evaluationComments) {
-        long likes=  evaluationComments.stream()
+        long likes = evaluationComments.stream()
                 .filter(evaluation -> evaluation.getType() == Type.LIKE)
                 .count();
-        long dislikes=  evaluationComments.stream()
+        long dislikes = evaluationComments.stream()
                 .filter(evaluation -> evaluation.getType() == Type.DISLIKE)
                 .count();
-        return new EvaluationResponse(likes,dislikes);
+        return new EvaluationResponse(likes, dislikes);
     }
 
 }

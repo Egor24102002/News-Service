@@ -13,19 +13,19 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfiguration {
-@Bean
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http.csrf(CsrfConfigurer::disable)
-            .authorizeHttpRequests(auth->
-                    auth
-                            .requestMatchers("/news/login","/news/users/create") .permitAll()
-                            .anyRequest()
-                    .authenticated())
-                    .formLogin(login->login
-                            .loginPage("/news/login")
-                            .defaultSuccessUrl("/news/articles")
-                            .permitAll()
-                    );
-    return http.build();
-}
+        http.csrf(CsrfConfigurer::disable)
+                .authorizeHttpRequests(auth ->
+                        auth
+                                .requestMatchers("/news/login", "/news/users/create").permitAll()
+                                .anyRequest()
+                                .authenticated())
+                .formLogin(login -> login
+                        .loginPage("/news/login")
+                        .defaultSuccessUrl("/news/articles")
+                        .permitAll()
+                );
+        return http.build();
+    }
 }

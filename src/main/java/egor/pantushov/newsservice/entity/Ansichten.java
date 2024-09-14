@@ -20,10 +20,10 @@ public class Ansichten {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ansichten_id")
     private Long ansichtenId;
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "article_id")
     private Article article;
 

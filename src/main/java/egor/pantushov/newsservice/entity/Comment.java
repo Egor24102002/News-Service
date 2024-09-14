@@ -22,10 +22,10 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_id")
     private Long commentId;
-    @Column(nullable=false)
+    @Column(nullable = false)
     private String text;
     @CreationTimestamp
-    @Column(name = "date_of_comment",nullable = false)
+    @Column(name = "date_of_comment", nullable = false)
     private Timestamp dateOfComment;
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -35,10 +35,11 @@ public class Comment {
     private Article article;
     @Builder.Default
     @OneToMany(mappedBy = "comment")
-    private List<EvaluationComment> evaluationComments=new ArrayList<>();
+    private List<EvaluationComment> evaluationComments = new ArrayList<>();
     @Builder.Default
     @Column(name = "is_deleted")
-   private boolean isDeleted=false ;
+    private boolean isDeleted = false;
+
     public void setUser(User user) {
         this.user = user;
         user.addComment(this);

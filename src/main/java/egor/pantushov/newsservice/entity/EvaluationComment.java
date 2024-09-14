@@ -17,13 +17,13 @@ public class EvaluationComment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "evaluation_comment_id")
     private Long evaluationCommentId;
-    @Column(nullable=false)
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Type type;
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "comment_id")
     private Comment comment;
 

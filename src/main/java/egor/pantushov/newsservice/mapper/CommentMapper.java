@@ -12,16 +12,16 @@ import java.util.Optional;
 
 public class CommentMapper {
     public static CommentResponse getCommentResponse(Comment comment) {
-        UserResponse userResponse= Optional.ofNullable(comment.getUser())
+        UserResponse userResponse = Optional.ofNullable(comment.getUser())
                 .map(UserMapper::getUserResponse).orElse(null);
-        String date=comment.getDateOfComment().toString();
-        EvaluationResponse evaluationCommentResponse=Optional.ofNullable(comment.getEvaluationComments())
+        String date = comment.getDateOfComment().toString();
+        EvaluationResponse evaluationCommentResponse = Optional.ofNullable(comment.getEvaluationComments())
                 .map(EvaluationMapper::getEvaluationResponseByComment).orElse(null);
-        return new CommentResponse( comment.getText(),  date.substring(0,date.length()-5),userResponse,comment.getCommentId(),comment.getArticle().getArticleId(),evaluationCommentResponse)
+        return new CommentResponse(comment.getText(), date.substring(0, date.length() - 5), userResponse, comment.getCommentId(), comment.getArticle().getArticleId(), evaluationCommentResponse)
                 ;
     }
 
-    public static CommentRequest getCommentRequest(CommentResponse commentResponse){
+    public static CommentRequest getCommentRequest(CommentResponse commentResponse) {
         return new CommentRequest(commentResponse.getText());
     }
 

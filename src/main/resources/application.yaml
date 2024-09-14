@@ -14,6 +14,6 @@ spring:
     driver-class-name: org.postgresql.Driver
 
   application:
-              name:
-                  NewsService
+    name:
+      NewsService
 

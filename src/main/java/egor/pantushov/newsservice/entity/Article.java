@@ -23,31 +23,32 @@ public class Article {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "article_id")
     private Long articleId;
-    @Column( length=64,nullable=false)
+    @Column(length = 64, nullable = false)
     private String title;
-    @Column(nullable=false)
+    @Column(nullable = false)
     private String content;
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id")
     private User author;
-    @Column(nullable=false)
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-   private Category category;
+    private Category category;
     @CreationTimestamp
-    @Column(name = "date_of_create",nullable = false)
+    @Column(name = "date_of_create", nullable = false)
     private Timestamp dateOfCreate;
-    @Column(nullable=false)
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Status status;
     @OneToMany(mappedBy = "article")
-    private List<Comment> comments=new ArrayList<>();
+    private List<Comment> comments = new ArrayList<>();
     @Builder.Default
     @OneToMany(mappedBy = "article")
-    private List<EvaluationArticle> evaluationArticles=new ArrayList<>();
+    private List<EvaluationArticle> evaluationArticles = new ArrayList<>();
 
     @Builder.Default
     @OneToMany(mappedBy = "article")
-    private List<Ansichten> ansichtens=new ArrayList<>();
+    private List<Ansichten> ansichtens = new ArrayList<>();
+
     public void setAuthor(User author) {
         this.author = author;
         author.addArticle(this);
@@ -58,6 +59,7 @@ public class Article {
             this.comments.add(comment);
         }
     }
+
     public void addEvaluationsArticles(EvaluationArticle evaluationArticle) {
         if (evaluationArticle != null) {
             this.evaluationArticles.add(evaluationArticle);

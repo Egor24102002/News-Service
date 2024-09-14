@@ -20,17 +20,19 @@ import java.security.Principal;
 public class EvaluationCommentController {
 
     private final EvaluationCommentService evaluationCommentService;
+
     @PreAuthorize("hasAnyAuthority('USER','EDITOR','ADMIN')")
     @PostMapping("/likeComment")
-    public String addEvaluationArticleLike(@PathVariable Long articleId , @PathVariable Long commentId, Principal principal){
-        this.evaluationCommentService.addEvaluationCommentLike(commentId,principal);
-        return "redirect:/news/articles/" +articleId;
+    public String addEvaluationArticleLike(@PathVariable Long articleId, @PathVariable Long commentId, Principal principal) {
+        this.evaluationCommentService.addEvaluationCommentLike(commentId, principal);
+        return "redirect:/news/articles/article/" + articleId;
     }
+
     @PreAuthorize("hasAnyAuthority('USER','EDITOR','ADMIN')")
     @PostMapping("/dislikeComment")
-    public String addEvaluationArticleDisLike(@PathVariable Long articleId ,@PathVariable Long commentId,Principal principal){
-        this.evaluationCommentService.addEvaluationCommentDislike(commentId,principal);
-        return "redirect:/news/articles/" +articleId;
+    public String addEvaluationArticleDisLike(@PathVariable Long articleId, @PathVariable Long commentId, Principal principal) {
+        this.evaluationCommentService.addEvaluationCommentDislike(commentId, principal);
+        return "redirect:/news/articles/article/" + articleId;
     }
 
 }

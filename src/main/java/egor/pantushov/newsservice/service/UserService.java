@@ -6,7 +6,7 @@ import egor.pantushov.newsservice.entity.Role;
 
 import java.util.List;
 
-public interface UserService  {
+public interface UserService {
     UserResponse createUser(UserRequest userRequest);
 
     List<UserResponse> findAllUsers();

@@ -6,5 +6,5 @@ import egor.pantushov.newsservice.dto.response.ArticleResponse;
 import java.security.Principal;
 
 public interface AnsichtenService {
-   ArticleResponse addAnsichten(Long articleId, Principal principal);
+    ArticleResponse addAnsichten(Long articleId, Principal principal);
 }

@@ -19,31 +19,30 @@ public class ArticleMapper {
                         .map(CommentMapper::getCommentResponse)
                         .collect(Collectors.toList()))
                 .orElse(null);
-    String dateOfCreate=article.getDateOfCreate().toString();
-        AnsichtenResponse ansichtenResponse=Optional.ofNullable(article.getAnsichtens())
+        String dateOfCreate = article.getDateOfCreate().toString();
+        AnsichtenResponse ansichtenResponse = Optional.ofNullable(article.getAnsichtens())
                 .map(AnsichtenMapper::getAnsichtenResponseByArticle).orElse(null);
-        EvaluationResponse evaluationArticleResponse=Optional.ofNullable(article.getEvaluationArticles())
+        EvaluationResponse evaluationArticleResponse = Optional.ofNullable(article.getEvaluationArticles())
                 .map(EvaluationMapper::getEvaluationResponsebyArticle).orElse(null);
         return new ArticleResponse(
                 article.getArticleId(),
                 article.getTitle(),
                 article.getContent(),
-                dateOfCreate.substring(0,dateOfCreate.length()-5),
+                dateOfCreate.substring(0, dateOfCreate.length() - 5),
                 UserMapper.getUserResponse(article.getAuthor()),
                 commentResponses,
                 evaluationArticleResponse,
                 ansichtenResponse
-                );
+        );
     }
 
 
-    public static Article getArticle(Article article,ArticleRequest articleRequest) {
-article.setTitle(articleRequest.getTitle());
-article.setContent(articleRequest.getContent());
-article.setCategory(articleRequest.getCategory());
-return article;
+    public static Article getArticle(Article article, ArticleRequest articleRequest) {
+        article.setTitle(articleRequest.getTitle());
+        article.setContent(articleRequest.getContent());
+        article.setCategory(articleRequest.getCategory());
+        return article;
     }
-
 
 
 }

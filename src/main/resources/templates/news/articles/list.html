@@ -17,22 +17,22 @@
                 <a class="nav-link" data-th-href="@{/news/articles}">Популярные</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-th-href="@{/news/articles/sport}">Спорт</a>
+                <a class="nav-link" data-th-href="@{/news/articles/by/Sport}">Спорт</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-th-href="@{/news/articles/war}">Война</a>
+                <a class="nav-link" data-th-href="@{/news/articles/by/War}">Война</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-th-href="@{/news/articles/politic}">Политика</a>
+                <a class="nav-link" data-th-href="@{/news/articles/by/Global}">Мировые</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-th-href="@{/news/articles/global}">Мировые</a>
+                <a class="nav-link" data-th-href="@{/news/articles/by/Politic}">Политика</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-th-href="@{/news/articles/culture}">Культура</a>
+                <a class="nav-link" data-th-href="@{/news/articles/by/Culture}">Культура</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-th-href="@{/news/articles/other}">Другие</a>
+                <a class="nav-link" data-th-href="@{/news/articles/by/Other}">Другие</a>
             </li>
         </ul>
     </div>
@@ -40,15 +40,23 @@
 
 <div class="container">
     <h1 class="mt-5">Новости</h1>
+    <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+        <span th:text="${errorMessage}"></span>
+    </div>
+
+
     <div class="row mt-4">
         <div th:each="article : ${articlesResponse}" class="col-md-12 mb-4">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title" th:text="${article.title}"></h5>
                     <h6 class="card-subtitle mb-2 text-muted" th:text="${article.dateOfCreate}"></h6>
-                    <a th:href="@{/news/articles/{articleId}(articleId=${article.articleId})}" class="btn btn-primary">Читать далее</a>
-                    <form th:action="@{/news/articles/delete/{articleId}(articleId=${article.articleId})}" method="post" style="display:inline;">
-                        <button type="submit" class="btn btn-danger" th:text="'Удалить'" Удалить</button>
+                    <a th:href="@{/news/articles/article/{articleId}(articleId=${article.articleId})}"
+                       class="btn btn-primary">Читать далее</a>
+                    <form th:action="@{/news/articles/delete/{articleId}(articleId=${article.articleId})}" method="post"
+                          style="display:inline;">
+                        <button type="submit" class="btn btn-danger" th:text="'Удалить'" Удалить
+                        </button>
                     </form>
                 </div>
             </div>

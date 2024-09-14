@@ -11,7 +11,7 @@ public class UserRequest {
 
     @NotEmpty(message = "Username must be not null")
     @Email(message = "Username must be a valid email address")
-String username;
+    String username;
     @Size(min = 3)
     @NotEmpty(message = "Password must be not null")
     String password;

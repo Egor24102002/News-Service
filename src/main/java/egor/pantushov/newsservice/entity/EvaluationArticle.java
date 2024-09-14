@@ -17,13 +17,13 @@ public class EvaluationArticle {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "evaluation_article_id")
     private Long evaluationArticleId;
-    @Column(nullable=false)
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Type type;
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "article_id")
     private Article article;
 
@@ -35,7 +35,7 @@ public class EvaluationArticle {
 
     public void setArticle(Article article) {
         this.article = article;
-    article.addEvaluationsArticles(this);
+        article.addEvaluationsArticles(this);
     }
 
 }

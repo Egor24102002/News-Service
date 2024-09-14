@@ -10,14 +10,17 @@
     <div class="row">
         <div class="col-md-8 offset-md-2">
             <h2 class="mt-5">Обновить комментарий</h2>
-            <form th:action="@{/news/articles/{articleId}/{commentId}(articleId=${commentResponse.articleId}, commentId=${commentResponse.commentId})}" method="post" th:object="${commentRequest}">
+            <form th:action="@{/news/articles/{articleId}/{commentId}(articleId=${commentResponse.articleId}, commentId=${commentResponse.commentId})}"
+                  method="post" th:object="${commentRequest}">
                 <div class="form-group">
                     <label for="text">Текст комментария:</label>
-                    <textarea class="form-control" id="text" name="text" th:field="*{text}" rows="5" th:value="${commentRequest.text}"></textarea>
+                    <textarea class="form-control" id="text" name="text" th:field="*{text}" rows="5"
+                              th:value="${commentRequest.text}"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Обновить</button>
             </form>
-            <a href="#" th:href="@{/news/articles/{articleId}(articleId=${commentResponse.articleId})}" class="btn btn-secondary mt-3">Назад</a>
+            <a href="#" th:href="@{/news/articles/{articleId}(articleId=${commentResponse.articleId})}"
+               class="btn btn-secondary mt-3">Назад</a>
         </div>
     </div>
 </div>

@@ -11,7 +11,7 @@ import java.util.List;
 
 public class AnsichtenMapper {
     public static AnsichtenResponse getAnsichtenResponseByArticle(List<Ansichten> ansichtens) {
-                return new AnsichtenResponse(ansichtens.size());
+        return new AnsichtenResponse(ansichtens.size());
     }
 
 }

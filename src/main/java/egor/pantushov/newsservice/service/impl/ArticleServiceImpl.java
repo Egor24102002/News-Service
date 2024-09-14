@@ -9,12 +9,14 @@ import egor.pantushov.newsservice.mapper.ArticleMapper;
 import egor.pantushov.newsservice.repository.ArticleRepository;
 import egor.pantushov.newsservice.repository.UserRepository;
 import egor.pantushov.newsservice.service.ArticleService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
+
 
 @Service
 @RequiredArgsConstructor
@@ -24,19 +26,20 @@ public class ArticleServiceImpl implements ArticleService {
 
 
     @Override
+    @Transactional
     public ArticleResponse createArticle(Principal principal, ArticleRequest articleRequest) {
-    Article article=new Article();
-   User user=userRepository.findByUsername(principal.getName())
-           .orElseThrow(() -> new UserNotFoundException(principal.getName()));
+        Article article = new Article();
+        User user = userRepository.findByUsername(principal.getName())
+                .orElseThrow(() -> new UserNotFoundException(principal.getName()));
         article.setAuthor(user);
-        if (user.getRole()== Role.ADMIN)
+        if (user.getRole() == Role.ADMIN)
             article.setStatus(Status.PUBLICATION);
         else
             article.setStatus(Status.VERIFICATION);
         ArticleMapper.getArticle(article, articleRequest);
         user.addArticle(article);
         articleRepository.save(article);
-    return ArticleMapper.getArticleResponse(article);
+        return ArticleMapper.getArticleResponse(article);
     }
 
     @Override
@@ -46,47 +49,13 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<ArticleResponse> findSportArticles() {
-        return articleRepository.findAllByCategoryAndStatus(Category.Sport,Status.PUBLICATION)
+    public List<ArticleResponse> findArticlesByCategory(Category category) {
+        return articleRepository.findAllByCategoryAndStatus(category, Status.PUBLICATION)
                 .stream().map(ArticleMapper::getArticleResponse)
                 .collect(Collectors.toList());
 
     }
 
-    @Override
-    public List<ArticleResponse> findWarArticles() {
-        return articleRepository.findAllByCategoryAndStatus(Category.War,Status.PUBLICATION)
-                .stream().map(ArticleMapper::getArticleResponse)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<ArticleResponse> findPoliticArticles() {
-        return articleRepository.findAllByCategoryAndStatus(Category.Politic,Status.PUBLICATION)
-                .stream().map(ArticleMapper::getArticleResponse)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<ArticleResponse> findOtherArticles() {
-        return articleRepository.findAllByCategoryAndStatus(Category.Other,Status.PUBLICATION)
-                .stream().map(ArticleMapper::getArticleResponse)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<ArticleResponse> findGlobalArticles() {
-        return articleRepository.findAllByCategoryAndStatus(Category.Global,Status.PUBLICATION)
-                .stream().map(ArticleMapper::getArticleResponse)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<ArticleResponse> findCultureArticles() {
-        return articleRepository.findAllByCategoryAndStatus(Category.Culture,Status.PUBLICATION)
-                .stream().map(ArticleMapper::getArticleResponse)
-                .collect(Collectors.toList());
-    }
 
     @Override
     public List<ArticleResponse> getPopularArticles() {
@@ -106,15 +75,15 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public ArticleResponse approveArticle(Long articleId) {
-       Article article=articleRepository.findById(articleId).orElseThrow(()-> new ArticleNotFoundException(articleId));
-    article.setStatus(Status.PUBLICATION);
-  articleRepository.save(article);
-    return ArticleMapper.getArticleResponse(article);
+        Article article = articleRepository.findById(articleId).orElseThrow(() -> new ArticleNotFoundException(articleId));
+        article.setStatus(Status.PUBLICATION);
+        articleRepository.save(article);
+        return ArticleMapper.getArticleResponse(article);
     }
 
     @Override
     public ArticleResponse deleteArticle(Long articleId) {
-        Article article=articleRepository.findById(articleId).orElseThrow(()-> new ArticleNotFoundException(articleId));
+        Article article = articleRepository.findById(articleId).orElseThrow(() -> new ArticleNotFoundException(articleId));
         article.setStatus(Status.DELETED);
         articleRepository.save(article);
         return ArticleMapper.getArticleResponse(article);

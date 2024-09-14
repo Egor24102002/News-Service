@@ -12,13 +12,15 @@
         <div class="form-group">
             <label for="title">Заголовок</label>
             <input type="text" class="form-control" id="title" th:field="*{title}" placeholder="Введите заголовок">
+            <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Неккоректный ввод</div>
         </div>
 
         <div class="form-group">
             <label for="content">Содержание</label>
-            <textarea class="form-control" id="content" th:field="*{content}" rows="5" placeholder="Введите содержание"></textarea>
+            <textarea class="form-control" id="content" th:field="*{content}" rows="5"
+                      placeholder="Введите содержание"></textarea>
+            <div th:if="${#fields.hasErrors('content')}" th:errors="*{content}">Неккоректный ввод</div>
         </div>
-
 
 
         <div class="form-group">

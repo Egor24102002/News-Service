@@ -6,9 +6,9 @@ import lombok.Value;
 
 
 @Value
-    public class UserResponse {
-        String firstname;
-        String lastname;
-        Role role;
-        Long userId;
+public class UserResponse {
+    String firstname;
+    String lastname;
+    Role role;
+    Long userId;
 }

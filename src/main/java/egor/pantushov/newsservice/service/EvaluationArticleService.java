@@ -9,6 +9,7 @@ import java.util.Optional;
 
 public interface EvaluationArticleService {
     ArticleResponse addEvaluationArticleLike(Long articleId, Principal principal);
+
     ArticleResponse addEvaluationArticleDislike(Long ArticleId, Principal principal);
 
 }
