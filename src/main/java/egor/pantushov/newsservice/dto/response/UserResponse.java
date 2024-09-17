@@ -1,6 +1,5 @@
 package egor.pantushov.newsservice.dto.response;
 
-import egor.pantushov.newsservice.entity.Category;
 import egor.pantushov.newsservice.entity.Role;
 import lombok.Value;
 

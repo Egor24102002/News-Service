@@ -1,8 +1,6 @@
 package egor.pantushov.newsservice.repository;
 
 import egor.pantushov.newsservice.entity.Ansichten;
-import egor.pantushov.newsservice.entity.Article;
-import egor.pantushov.newsservice.entity.EvaluationArticle;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

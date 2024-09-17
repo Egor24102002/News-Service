@@ -28,7 +28,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     @Transactional
     public ArticleResponse createArticle(Principal principal, ArticleRequest articleRequest) {
-        Article article = new Article();
+        Article article = ArticleMapper.getArticle(articleRequest);
         User user = userRepository.findByUsername(principal.getName())
                 .orElseThrow(() -> new UserNotFoundException(principal.getName()));
         article.setAuthor(user);
@@ -36,7 +36,7 @@ public class ArticleServiceImpl implements ArticleService {
             article.setStatus(Status.PUBLICATION);
         else
             article.setStatus(Status.VERIFICATION);
-        ArticleMapper.getArticle(article, articleRequest);
+
         user.addArticle(article);
         articleRepository.save(article);
         return ArticleMapper.getArticleResponse(article);

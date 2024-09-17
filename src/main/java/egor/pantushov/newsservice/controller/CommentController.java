@@ -2,7 +2,6 @@ package egor.pantushov.newsservice.controller;
 
 import egor.pantushov.newsservice.dto.request.CommentRequest;
 import egor.pantushov.newsservice.dto.response.CommentResponse;
-import egor.pantushov.newsservice.entity.Category;
 import egor.pantushov.newsservice.exeption.CommentSubmittedException;
 import egor.pantushov.newsservice.mapper.CommentMapper;
 import egor.pantushov.newsservice.service.CommentService;

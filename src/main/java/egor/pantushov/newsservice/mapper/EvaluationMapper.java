@@ -4,7 +4,6 @@ import egor.pantushov.newsservice.dto.response.EvaluationResponse;
 import egor.pantushov.newsservice.entity.EvaluationArticle;
 import egor.pantushov.newsservice.entity.EvaluationComment;
 import egor.pantushov.newsservice.entity.Type;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 

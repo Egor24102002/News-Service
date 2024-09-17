@@ -4,7 +4,6 @@ import egor.pantushov.newsservice.dto.request.ArticleRequest;
 import egor.pantushov.newsservice.dto.response.*;
 import egor.pantushov.newsservice.entity.Article;
 
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
@@ -37,7 +36,8 @@ public class ArticleMapper {
     }
 
 
-    public static Article getArticle(Article article, ArticleRequest articleRequest) {
+    public static Article getArticle(ArticleRequest articleRequest) {
+        Article article = new Article();
         article.setTitle(articleRequest.getTitle());
         article.setContent(articleRequest.getContent());
         article.setCategory(articleRequest.getCategory());

@@ -1,9 +1,7 @@
 package egor.pantushov.newsservice.controller;
 
-import egor.pantushov.newsservice.dto.request.CommentRequest;
 import egor.pantushov.newsservice.dto.request.UserRequest;
 
-import egor.pantushov.newsservice.entity.Category;
 import egor.pantushov.newsservice.entity.Role;
 import egor.pantushov.newsservice.service.UserService;
 import jakarta.validation.Valid;

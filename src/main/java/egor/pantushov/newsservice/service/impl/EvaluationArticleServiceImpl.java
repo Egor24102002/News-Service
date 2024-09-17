@@ -5,10 +5,8 @@ import egor.pantushov.newsservice.entity.*;
 import egor.pantushov.newsservice.exeption.ArticleNotFoundException;
 
 import egor.pantushov.newsservice.exeption.EvaluationArticleNotFoundException;
-import egor.pantushov.newsservice.exeption.EvaluationCommentNotFoundException;
 import egor.pantushov.newsservice.exeption.UserNotFoundException;
 import egor.pantushov.newsservice.mapper.ArticleMapper;
-import egor.pantushov.newsservice.mapper.CommentMapper;
 import egor.pantushov.newsservice.repository.ArticleRepository;
 import egor.pantushov.newsservice.repository.EvaluationArticleRepository;
 import egor.pantushov.newsservice.repository.UserRepository;
@@ -18,8 +16,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
-import java.util.List;
-import java.util.Optional;
 
 import static java.lang.Boolean.TRUE;
 

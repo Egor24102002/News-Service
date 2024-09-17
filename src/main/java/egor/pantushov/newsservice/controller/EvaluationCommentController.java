@@ -1,13 +1,10 @@
 package egor.pantushov.newsservice.controller;
 
-import egor.pantushov.newsservice.dto.request.CommentRequest;
-import egor.pantushov.newsservice.entity.EvaluationComment;
-import egor.pantushov.newsservice.service.EvaluationArticleService;
+
 import egor.pantushov.newsservice.service.EvaluationCommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
