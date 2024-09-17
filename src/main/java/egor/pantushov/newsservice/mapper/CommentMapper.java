@@ -5,7 +5,6 @@ import egor.pantushov.newsservice.dto.response.CommentResponse;
 import egor.pantushov.newsservice.dto.response.EvaluationResponse;
 import egor.pantushov.newsservice.dto.response.UserResponse;
 import egor.pantushov.newsservice.entity.Comment;
-import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
