@@ -6,7 +6,8 @@ import egor.pantushov.newsservice.entity.User;
 
 
 public class UserMapper {
-    public static User getUser(User user, UserRequest userRequest) {
+    public static User getUser(UserRequest userRequest) {
+        User user = new User();
         user.setFirstname(userRequest.getFirstname());
         user.setLastname(userRequest.getLastname());
         user.setUsername(userRequest.getUsername());

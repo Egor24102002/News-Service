@@ -36,9 +36,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     public UserResponse createUser(UserRequest userRequest) {
-        User user = new User();
+        User user=UserMapper.getUser( userRequest);
         user.setRole(Role.USER);
-        UserMapper.getUser(user, userRequest);
         userRepository.save(user);
         return UserMapper.getUserResponse(user);
     }

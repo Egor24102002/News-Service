@@ -24,7 +24,8 @@ public class CommentMapper {
         return new CommentRequest(commentResponse.getText());
     }
 
-    public static Comment getComment(Comment comment, CommentRequest commentRequest) {
+    public static Comment getComment(CommentRequest commentRequest) {
+        Comment comment = new Comment();
         comment.setText(commentRequest.getText());
         return comment;
     }

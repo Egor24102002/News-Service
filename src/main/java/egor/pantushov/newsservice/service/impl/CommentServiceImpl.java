@@ -20,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -31,15 +32,13 @@ public class CommentServiceImpl implements CommentService {
     @Transactional
     @Override
     public CommentResponse createComment(Principal principal, CommentRequest commentRequest, Long id) {
-        Comment comment = new Comment();
+        Comment comment = CommentMapper.getComment(commentRequest);
         User user = userRepository.findByUsername(principal.getName())
                 .orElseThrow(() -> new UserNotFoundException(principal.getName()));
         comment.setUser(user);
         Article article = articleRepository.findById(id)
                 .orElseThrow(() -> new ArticleNotFoundException(id));
         comment.setArticle(article);
-
-        CommentMapper.getComment(comment, commentRequest);
         user.addComment(comment);
         article.addComment(comment);
         this.commentRepository.save(comment);
@@ -55,8 +54,8 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public CommentResponse update(CommentRequest commentRequest, Long commentId) {
         Comment comment = this.commentRepository.findById(commentId).orElseThrow(() -> new CommentNotFoundException(commentId));
-        Comment update_comment = CommentMapper.getComment(comment, commentRequest);
-        return CommentMapper.getCommentResponse(this.commentRepository.save(update_comment));
+        comment.setText(commentRequest.getText());
+        return CommentMapper.getCommentResponse(this.commentRepository.save(comment));
     }
 
     @Transactional
@@ -65,7 +64,7 @@ public class CommentServiceImpl implements CommentService {
         User user = userRepository.findByUsername(principal.getName())
                 .orElseThrow(() -> new UserNotFoundException(principal.getName()));
         Comment comment = this.commentRepository.findById(commentId).orElseThrow(() -> new CommentNotFoundException(commentId));
-        if ((comment.getUser().getUserId() != user.getUserId()) && (user.getRole() != Role.ADMIN))
+        if ((!Objects.equals(comment.getUser().getUserId(), user.getUserId())) && (user.getRole() != Role.ADMIN))
             throw new CommentSubmittedException(commentId, user.getUsername());
         return CommentMapper.getCommentResponse(comment);
     }
@@ -77,7 +76,7 @@ public class CommentServiceImpl implements CommentService {
         User user = userRepository.findByUsername(principal.getName())
                 .orElseThrow(() -> new UserNotFoundException(principal.getName()));
 
-        if ((comment.getUser().getUserId() != user.getUserId()) && (user.getRole() != Role.ADMIN))
+        if ((!Objects.equals(comment.getUser().getUserId(), user.getUserId())) && (user.getRole() != Role.ADMIN))
             throw new CommentSubmittedException(commentId, user.getUsername());
 
 
